@@ -1,0 +1,14 @@
+{
+  "name": "reaction-game",
+  "authors": [
+    "Yaroslav Osypenko <harentius@yandex.ru>"
+  ],
+  "description": "",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "jquery": "^2.2.3"
+  }
+}

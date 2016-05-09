@@ -1,0 +1,10 @@
+#!/bin/sh
+
+bin_dir=$(cd $(dirname $0) && pwd)
+base_dir=$(cd "$bin_dir/.." && pwd)
+
+bower install
+npm install
+
+echo "prod" > "$base_dir/.env"
+./node_modules/gulp/bin/gulp.js
