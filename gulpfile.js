@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+    less = require('gulp-less'),
     coffee = require('gulp-coffee'),
     concat = require('gulp-concat'),
     watch = require('gulp-watch'),
@@ -16,6 +17,13 @@ if (!argv.env && fs.existsSync(envFile)) {
     env = fs.readFileSync(envFile, 'utf8');
 }
 
+gulp.task('less', function () {
+    gulp.src('./css/**/*.less')
+        .pipe(less())
+        .pipe(concat('style.css'))
+        .pipe(gulp.dest('./web/public/css/'))
+    ;
+});
 
 gulp.task('coffee', function () {
     gulp.src('./js/**/*.coffee')
@@ -29,9 +37,13 @@ gulp.task('watch', function() {
     watch(['./js/*.coffee'], batch(function(events, cb) {
         gulp.start('default', cb);
     }));
+
+    watch(['./css/**/*.less'], batch(function(events, cb) {
+        gulp.start('default', cb);
+    }));
 });
 
-var tasks = ['coffee'];
+var tasks = ['coffee', 'less'];
 
 if (env === 'dev') {
     tasks.push('watch');
