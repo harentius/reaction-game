@@ -2,43 +2,48 @@
   'use strict'
 
   class DataRenderer
-    render: (state, $table) ->
+    $container: null
+    grid: null
+
+    constructor: ($container) ->
+      @.$container = $container
+
+    render: (state) ->
       data = state.getData()
 
       return if !data
 
-      minX = data[0][0]
-      maxX = data[0][0]
-      minY = data[0][1]
-      maxY = data[0][1]
-  
-      for val in data
-        minX = val[0] if val[0] < minX
-        maxX = val[0] if val[0] > maxX
-        minY = val[1] if val[1] < minY
-        maxY = val[1] if val[1] > maxY
-  
-      i = minY
-      tableContent = ''
-  
-      while i <= maxY
-        j = minX
-        rowContent = ''
-  
-        while j <= maxX
-          rowContent += "<td>#{@._getValueOrEmpty(j, i, data)}</td>"
-          j++
-  
-        tableContent += "<tr>#{rowContent}</tr>"
-        i++
+      bounds = @._getBounds(data)
 
-      $table.html(tableContent)
-        
-    _getValueOrEmpty: (x, y, data) ->
+      if @._hasToInitGrid(bounds)
+        @.grid = new Reaction.Grid(bounds, @.$container)
+
       for val in data
-        return val[2] if val[0] == x and val[1] == y
-    
-      return ''
+        @.grid.set(val[0], val[1], if val[2] then val[2] else ' ')
+        
+    _hasToInitGrid: (bounds) ->
+      return true if not @.grid
+
+      gridBounds = @.grid.getBounds()
+
+      return (gridBounds.minI != bounds.minI || gridBounds.maxI != bounds.maxI ||
+        gridBounds.minJ != bounds.minJ || gridBounds.maxJ != bounds.maxJ
+      )
+
+    _getBounds: (data) ->
+      bounds =
+        minI: data[0][0]
+        maxI: data[0][0]
+        minJ: data[0][1]
+        maxJ: data[0][1]
+
+      for val in data
+        bounds.minI = val[0] if val[0] < bounds.minI
+        bounds.maxI = val[0] if val[0] > bounds.maxI
+        bounds.minJ = val[1] if val[1] < bounds.minJ
+        bounds.maxJ = val[1] if val[1] > bounds.maxJ
+
+      return bounds
 
 
   global.Reaction ||= {}
