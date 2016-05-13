@@ -62,14 +62,14 @@
     _calculateCellSize: (bounds, gridWidth, gridHeight) ->
       elementsI = Math.abs(bounds.maxI - bounds.minI) + 1
       elementsJ = Math.abs(bounds.maxJ - bounds.minJ) + 1
-      # Also accounts margins
-      cellSizeI = gridHeight / elementsI - 2 * elementsI
-      cellSizeJ = gridWidth / elementsJ - 2 * elementsJ
+      cellSizeI = gridHeight / elementsI
+      cellSizeJ = gridWidth / elementsJ
 
+      # Also accounts margins
       if cellSizeI < cellSizeJ
-        return ~~cellSizeI
+        return ~~cellSizeI - 4
       else
-        return ~~cellSizeJ
+        return ~~cellSizeJ - 2
 
   global.Reaction ||= {}
   global.Reaction.Grid = Grid
