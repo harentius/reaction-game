@@ -7,9 +7,14 @@
     stateManager = new Reaction.StateManager(state)
     dataRenderer = new Reaction.DataRenderer($('#reaction-grid'))
 
-    setInterval(() ->
+    mainLoop = () ->
       stateManager.tick()
       dataRenderer.render(state)
+
+    mainLoop()
+
+    setInterval(() ->
+      mainLoop()
     , config.gameTickInterval)
   )
 )(window, jQuery)
