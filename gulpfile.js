@@ -21,7 +21,7 @@ gulp.task('less', function () {
     gulp.src('./css/**/*.less')
         .pipe(less())
         .pipe(concat('style.css'))
-        .pipe(gulp.dest('./web/public/css/'))
+        .pipe(gulp.dest('./public/css/'))
     ;
 });
 
@@ -29,7 +29,7 @@ gulp.task('coffee', function () {
     gulp.src('./js/**/*.coffee')
         .pipe(coffee())
         .pipe(concat('client.js'))
-        .pipe(gulp.dest('./web/public/js/'))
+        .pipe(gulp.dest('./public/js/'))
     ;
 });
 
