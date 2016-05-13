@@ -10,10 +10,10 @@
 
     $container: null
 
-    constructor: (bounds, $container) ->
+    constructor: (bounds, width, height, $container) ->
       @.bounds = bounds
       @.$container = $container
-      cellSize = @._calculateCellSize(bounds, $container)
+      cellSize = @._calculateCellSize(bounds, width, height)
 
       @.init(bounds, cellSize, $container)
 
@@ -59,12 +59,12 @@
 
       attrs.join(' ')
 
-    _calculateCellSize: (bounds, $container) ->
+    _calculateCellSize: (bounds, gridWidth, gridHeight) ->
       elementsI = Math.abs(bounds.maxI - bounds.minI) + 1
       elementsJ = Math.abs(bounds.maxJ - bounds.minJ) + 1
       # Also accounts margins
-      cellSizeI = $container.height() / elementsI - 2 * elementsI
-      cellSizeJ = $container.width() / elementsJ - 2 * elementsJ
+      cellSizeI = gridHeight / elementsI - 2 * elementsI
+      cellSizeJ = gridWidth / elementsJ - 2 * elementsJ
 
       if cellSizeI < cellSizeJ
         return ~~cellSizeI

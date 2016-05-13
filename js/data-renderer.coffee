@@ -3,10 +3,12 @@
 
   class DataRenderer
     $container: null
+    $wrapper: null
     grid: null
 
-    constructor: ($container) ->
+    constructor: ($container, $wrapper) ->
       @.$container = $container
+      @.$wrapper = $wrapper
 
     render: (state) ->
       data = state.getData()
@@ -16,7 +18,7 @@
       bounds = @._getBounds(data)
 
       if @._hasToInitGrid(bounds)
-        @.grid = new Reaction.Grid(bounds, @.$container)
+        @.grid = new Reaction.Grid(bounds, @.$wrapper.width(), @.$wrapper.height(), @.$container)
 
       for val in data
         @.grid.set(val[0], val[1], if val[2] then val[2] else ' ')
