@@ -19,13 +19,13 @@
 
     init: (bounds, cellSize, $container) ->
       content = ''
+      rowAttributes =
+        'class': 'row'
+        'data-row': null
       colAttributes =
         'class': 'coll cell'
         'style': "width: #{cellSize}px; height: #{cellSize}px;"
         'data-col': null
-      rowAttributes =
-        'class': 'row'
-        'data-row': null
 
       for i in [bounds.minI..bounds.maxI]
         rowContent = ''
