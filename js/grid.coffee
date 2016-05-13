@@ -19,12 +19,18 @@
 
     init: (bounds, cellSize, $container) ->
       content = ''
+      sizeString = "#{cellSize}px"
       rowAttributes =
         'class': 'row'
         'data-row': null
       colAttributes =
         'class': 'coll cell'
-        'style': "width: #{cellSize}px; height: #{cellSize}px;"
+        'style': @._compileAttributes(
+          'width': sizeString
+          'height': sizeString
+          'line-height': sizeString
+          'font-size': "#{cellSize / 2}px"
+        , (n, v) -> "#{n}: #{v};")
         'data-col': null
 
       for i in [bounds.minI..bounds.maxI]
@@ -45,20 +51,20 @@
 
     getBounds: () -> @.bounds
 
-    _compileAttributes: (object) ->
-      attrs = ''
+    _compileAttributes: (object, formatter = (n, v) -> "#{n}=\"#{v}\"") ->
+      attrs = []
 
       for attr, value of object
-        attrs += (if attrs then ' ' else '') + "#{attr}=\"#{value}\""
+        attrs.push(formatter(attr, value))
 
-      attrs
+      attrs.join(' ')
 
     _calculateCellSize: (bounds, $container) ->
       elementsI = Math.abs(bounds.maxI - bounds.minI) + 1
       elementsJ = Math.abs(bounds.maxJ - bounds.minJ) + 1
       # Also accounts margins
-      cellSizeI = $container.width() / elementsI - 2 * elementsI
-      cellSizeJ = $container.height() / elementsJ - 2 * elementsJ
+      cellSizeI = $container.height() / elementsI - 2 * elementsI
+      cellSizeJ = $container.width() / elementsJ - 2 * elementsJ
 
       if cellSizeI < cellSizeJ
         return ~~cellSizeI
