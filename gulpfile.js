@@ -25,10 +25,26 @@ gulp.task('less', function () {
     ;
 });
 
-gulp.task('coffee', function () {
-    gulp.src('./js/**/*.coffee')
+gulp.task('coffee-lib', function () {
+    gulp.src(['./js/**/*.coffee', '!./js/app.coffee'])
         .pipe(coffee())
-        .pipe(concat('client.js'))
+        .pipe(concat('lib.js'))
+        .pipe(gulp.dest('./public/js/'))
+    ;
+});
+
+gulp.task('coffee-app', function () {
+    gulp.src('./js/app.coffee')
+        .pipe(coffee())
+        .pipe(concat('app.js'))
+        .pipe(gulp.dest('./public/js/'))
+    ;
+});
+
+gulp.task('coffee-spec', function () {
+    gulp.src('./spec/**/*.coffee')
+        .pipe(coffee())
+        .pipe(concat('spec.js'))
         .pipe(gulp.dest('./public/js/'))
     ;
 });
@@ -43,10 +59,11 @@ gulp.task('watch', function() {
     }));
 });
 
-var tasks = ['coffee', 'less'];
+var tasks = ['coffee-lib', 'coffee-app', 'less'];
 
 if (env === 'dev') {
     tasks.push('watch');
+    tasks.push('coffee-spec');
 }
 
 gulp.task('default', tasks);

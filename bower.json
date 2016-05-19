@@ -10,5 +10,8 @@
   "homepage": "",
   "dependencies": {
     "jquery": "^2.2.3"
+  },
+  "devDependencies": {
+    "jasmine-standalone": "^2.3.2"
   }
 }
