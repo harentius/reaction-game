@@ -26,20 +26,7 @@
 
     setXY: (x, y, value) ->
       @.data.push([x, y, value])
-
-      # Remove element from available list
-      index = @.getIndexOfAvailable(x, y)
-
-      @.availablePlaces.splice(index, 1) if index != null
-
-      # Update available places
-      for i in [(x - @.availabilityAreaDistance)..(x + @.availabilityAreaDistance)]
-        for j in [(y - @.availabilityAreaDistance)..(y + @.availabilityAreaDistance)]
-          index = @.getIndexOfAvailable(i, j)
-
-          if index == null and @.isEmpty(i, j)
-            @.availablePlaces.push([i, j])
-
+      @.updateAvailablePlaces(x, y)
       @.updateAvailableNumbers(value)
 
     getXY: (x, y, def = null) ->
@@ -68,7 +55,20 @@
 
       @.maxNumberWasAvailable = newMaxNumber
 
-      
+    updateAvailablePlaces: (x, y) ->
+      # Remove element from available list
+      index = @.getIndexOfAvailable(x, y)
+
+      @.availablePlaces.splice(index, 1) if index != null
+
+      # Update available places
+      for i in [(x - @.availabilityAreaDistance)..(x + @.availabilityAreaDistance)]
+        for j in [(y - @.availabilityAreaDistance)..(y + @.availabilityAreaDistance)]
+          index = @.getIndexOfAvailable(i, j)
+
+          if index == null and @.isEmpty(i, j)
+            @.availablePlaces.push([i, j])
+
   global.Reaction ||= {}
   global.Reaction.State = State
 )(window)
