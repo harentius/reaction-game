@@ -1,3 +1,9 @@
+containsPlace = (place, places) ->
+  for p in places
+    return true if p[0] == place[0] && p[1] == place[1]
+
+  return false
+
 describe("Testing data/state ", () ->
   it("Should correctly initialize available places after creating instance", () ->
     data =
@@ -14,12 +20,6 @@ describe("Testing data/state ", () ->
         [-1, 1]
         [1, -1]
       ]
-
-    containsPlace = (place, places) ->
-      for p in places
-        return true if p[0] == place[0] && p[1] == place[1]
-
-      return false
 
     state = new Reaction.State(data.availabilityAreaDistance, data.minAvailableNumbers)
 
