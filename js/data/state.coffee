@@ -9,11 +9,17 @@
     minAvailableNumbers: 0
     maxNumberWasAvailable: 0
 
-    constructor: (availabilityAreaDistance = 0, minAvailableNumbers = 5) ->
+    constructor: (availabilityAreaDistance = 1, minAvailableNumbers = 5) ->
       @.availabilityAreaDistance = availabilityAreaDistance
       @.minAvailableNumbers = minAvailableNumbers
-      @.availableNumbers.push(i) for i in [1...minAvailableNumbers]
       @.maxNumberWasAvailable = minAvailableNumbers
+
+      for i in [1..minAvailableNumbers]
+        @.availableNumbers.push(i)
+
+      for i in [-availabilityAreaDistance..availabilityAreaDistance]
+        for j in [-availabilityAreaDistance..availabilityAreaDistance]
+          @.availablePlaces.push([i, j])
 
     getData: () ->
       @.data

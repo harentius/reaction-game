@@ -50,7 +50,11 @@ gulp.task('coffee-spec', function () {
 });
 
 gulp.task('watch', function() {
-    watch(['./js/*.coffee'], batch(function(events, cb) {
+    watch(['./js/**/*.coffee'], batch(function(events, cb) {
+        gulp.start('default', cb);
+    }));
+
+    watch(['./spec/**/*.coffee'], batch(function(events, cb) {
         gulp.start('default', cb);
     }));
 
