@@ -22,7 +22,7 @@
 
       for val in data
         @.grid.set(val[0], val[1], if val[2] then val[2] else ' ')
-        
+
     _hasToInitGrid: (bounds) ->
       return true if not @.grid
 
