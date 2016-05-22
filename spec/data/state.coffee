@@ -37,7 +37,22 @@ describe("Testing data/state ", () ->
         y: 1
         val: 1
         expectedNumbers: [2, 3, 4, 5, 6]
-      }
+      }, {
+        x: 0
+        y: -1
+        val: 5
+        expectedNumbers: [2, 3, 4, 6, 7]
+      }, {
+        x: 1
+        y: -1
+        val: 3
+        expectedNumbers: [2, 4, 6, 7, 8]
+      }, {
+        x: -1
+        y: -1
+        val: 8
+        expectedNumbers: [2, 4, 6, 7, 9]
+      },
     ]
 
     for stepData in data
