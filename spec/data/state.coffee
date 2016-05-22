@@ -12,31 +12,42 @@ sort = (array) ->
 
   array
 
-equalArrays2Dim = (places1, places2) ->
-  return true if (places1 == places2)
-  return false if (places1 == null || places2 == null)
-  return false if (places1.length != places2.length)
+equalArrays = (arr1, arr2) ->
+  return true if (arr1 == arr2)
+  return false if (arr1 == null || arr2 == null)
+  arr1.sort()
+  arr2.sort()
 
-  places1 = sort(places1)
-  places2 = sort(places2)
+  for e, k in arr1
+    return false if e != arr2[k]
 
-  for e, k in places1
-    return false if e[0] != places2[k][0] || e[1] != places2[k][1]
+  return true
+
+equalArrays2Dim = (arr1, arr2) ->
+  return true if (arr1 == arr2)
+  return false if (arr1 == null || arr2 == null)
+  return false if (arr1.length != arr2.length)
+
+  arr1 = sort(arr1)
+  arr2 = sort(arr2)
+
+  for e, k in arr1
+    return false if e[0] != arr2[k][0] || e[1] != arr2[k][1]
 
   return true
 
 
 describe("Testing data/state ", () ->
+  state = null
   config =
     availabilityAreaDistance: 1
     minAvailableNumbers: 5
 
   beforeEach(() ->
-#    state = new Reaction.State(config.availabilityAreaDistance, config.minAvailableNumbers)
+    state = new Reaction.State(config.availabilityAreaDistance, config.minAvailableNumbers)
   )
 
   it("Should correctly initialize available places after creating instance", () ->
-    state = new Reaction.State(config.availabilityAreaDistance, config.minAvailableNumbers)
     expectedPlaces = [
       [-1, -1]
       [-1, 0]
@@ -52,5 +63,9 @@ describe("Testing data/state ", () ->
     expect(equalArrays2Dim(state.getAvailablePlaces(), expectedPlaces)).toBe(true);
   )
 
-  it("Should correctly ")
+  it("Should correctly initialize numbers after creating instance", () ->
+    expectedNumbers = [1, 2, 3, 4, 5]
+
+    expect(equalArrays(state.getAvailableNumbers(), expectedNumbers)).toBe(true);
+  )
 )

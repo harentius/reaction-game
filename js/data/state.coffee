@@ -2,14 +2,10 @@
   'use strict'
 
   class State
-    data: []
-    availablePlaces: []
-    availableNumbers: []
-    availabilityAreaDistance: 0
-    minAvailableNumbers: 0
-    maxNumberWasAvailable: 0
-
     constructor: (availabilityAreaDistance = 1, minAvailableNumbers = 5) ->
+      @.data = []
+      @.availablePlaces = []
+      @.availableNumbers = []
       @.availabilityAreaDistance = availabilityAreaDistance
       @.minAvailableNumbers = minAvailableNumbers
       @.maxNumberWasAvailable = minAvailableNumbers

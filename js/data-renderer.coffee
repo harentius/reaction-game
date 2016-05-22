@@ -2,13 +2,10 @@
   'use strict'
 
   class DataRenderer
-    $container: null
-    $wrapper: null
-    grid: null
-
     constructor: ($container, $wrapper) ->
       @.$container = $container
       @.$wrapper = $wrapper
+      @.grid = null
 
     render: (state) ->
       data = state.getData()

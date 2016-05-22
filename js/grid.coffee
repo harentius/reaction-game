@@ -2,15 +2,12 @@
   'use strict'
 
   class Grid
-    bounds:
-      minI: null
-      maxI: null
-      minJ: null
-      maxJ: null
-
-    $container: null
-
     constructor: (bounds, width, height, $container) ->
+#      bounds:
+#        minI: null
+#        maxI: null
+#        minJ: null
+#        maxJ: null
       @.bounds = bounds
       @.$container = $container
       cellSize = @._calculateCellSize(bounds, width, height)

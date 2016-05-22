@@ -2,8 +2,6 @@
   'use strict'
 
   class StateManager
-    state: null
-
     constructor: (state) ->
       @.state = state
       @.generateRandomNumberAtXY(0, 0)
