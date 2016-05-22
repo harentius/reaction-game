@@ -41,8 +41,16 @@ gulp.task('coffee-app', function () {
     ;
 });
 
+gulp.task('coffee-spec-common', function () {
+    gulp.src('./spec/common.coffee')
+        .pipe(coffee())
+        .pipe(concat('spec-common.js'))
+        .pipe(gulp.dest('./public/js/'))
+    ;
+});
+
 gulp.task('coffee-spec', function () {
-    gulp.src('./spec/**/*.coffee')
+    gulp.src(['./spec/**/*.coffee', '!./spec/common.coffee'])
         .pipe(coffee())
         .pipe(concat('spec.js'))
         .pipe(gulp.dest('./public/js/'))
@@ -67,6 +75,7 @@ var tasks = ['coffee-lib', 'coffee-app', 'less'];
 
 if (env === 'dev') {
     tasks.push('watch');
+    tasks.push('coffee-spec-common');
     tasks.push('coffee-spec');
 }
 
