@@ -68,4 +68,19 @@ describe("Testing data/state ", () ->
 
     expect(equalArrays(state.getAvailableNumbers(), expectedNumbers)).toBe(true);
   )
+
+  it("Should correctly update available numbers after setting new value", () ->
+    data = [
+      {
+        x: 0
+        y: 1
+        val: 1
+        expectedNumbers: [2, 3, 4, 5, 6]
+      }
+    ]
+
+    for stepData in data
+      state.setXY(stepData.x, stepData.y, stepData.val)
+      expect(equalArrays(state.getAvailableNumbers(), stepData.expectedNumbers)).toBe(true);
+  )
 )
