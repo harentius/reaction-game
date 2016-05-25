@@ -31,10 +31,11 @@
       @._updateAvailablePlaces(x, y)
       @._updateAvailableNumbers(value)
 
-    getXY: (x, y, def = null) ->
-      index = @._getIndexOfAvailable(x, y)
+    _getIndex: (x, y) ->
+      for val, i in @.data
+        return i if val[0] == x and val[1] == y
 
-      return if index then @.data[index] else def
+      null
 
     _getIndexOfAvailable: (x, y) ->
       for val, i in @.availablePlaces
@@ -42,8 +43,8 @@
 
       null
 
-    _isEmpty: (x, y) ->
-      @._getIndexOfAvailable(x, y) == null
+    _isAvailable: (x, y) ->
+      @._getIndex(x, y) == null and @._getIndexOfAvailable(x, y) == null
 
     _updateAvailableNumbers: (value) ->
       index = @.availableNumbers.indexOf(value)
@@ -59,15 +60,14 @@
     _updateAvailablePlaces: (x, y) ->
       # Remove element from available list
       index = @._getIndexOfAvailable(x, y)
-
       @.availablePlaces.splice(index, 1) if index != null
 
       # Update available places
       for i in [(x - @.availabilityAreaDistance)..(x + @.availabilityAreaDistance)]
         for j in [(y - @.availabilityAreaDistance)..(y + @.availabilityAreaDistance)]
-          index = @._getIndexOfAvailable(i, j)
+          continue if i == x and j == y
 
-          if index == null and @._isEmpty(i, j)
+          if @._isAvailable(i, j)
             @.availablePlaces.push([i, j])
 
   global.Reaction ||= {}
