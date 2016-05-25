@@ -9,7 +9,8 @@
   "license": "MIT",
   "homepage": "",
   "dependencies": {
-    "jquery": "^2.2.3"
+    "jquery": "^2.2.3",
+    "bootstrap": "^3.3.6"
   },
   "devDependencies": {
     "jasmine-standalone": "^2.3.2"

@@ -2,9 +2,10 @@
   'use strict'
 
   class DataRenderer
-    constructor: ($container, $wrapper) ->
+    constructor: ($container, width, height) ->
       @.$container = $container
-      @.$wrapper = $wrapper
+      @.width = width
+      @.height = height
       @.grid = null
 
     render: (state) ->
@@ -15,7 +16,7 @@
       bounds = @._getBounds(data)
 
       if @._hasToInitGrid(bounds)
-        @.grid = new Reaction.Grid(bounds, @.$wrapper.width(), @.$wrapper.height(), @.$container)
+        @.grid = new Reaction.Grid(bounds, @.width, @.height, @.$container)
 
       for val in data
         @.grid.set(val[0], val[1], if val[2] then val[2] else ' ')

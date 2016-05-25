@@ -1,3 +1,5 @@
+@nav-panel-height: 50px;
+
 html, body {
   height: 100%;
 }
@@ -7,14 +9,39 @@ body {
   background: #84978c;
 }
 
+.nav-wrapper {
+  height: @nav-panel-height;
+  text-align: left;
+}
+
 .container {
   width: 90%;
   height: 100%;
-  margin: 0 auto;
   text-align: center;
 }
 
 .grid-wrapper {
   margin: 0 auto;
   display: inline-block;
+}
+
+.game-button {
+  margin: 5px 10px 5px 0;
+  background: #158252;
+  color: #ffffff;
+  font-size: 18px;
+  border: 1px solid #136d43;
+
+  &:hover, &:visited, &:active, &:focus {
+    background: #14925f;
+    color: #ffffff;
+    outline: none;
+  }
+}
+
+.info-wrapper {
+  color: #346164;
+  font-size: 18px;
+  height: @nav-panel-height;
+  line-height: @nav-panel-height;
 }
