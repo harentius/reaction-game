@@ -25,5 +25,13 @@
     $('#stop-game').on('click', () ->
       game.stop()
     )
+
+    $(document).on('click', '.cell', (e) ->
+      $cell = $(e.target).closest('.cell')
+      game.choose(
+        ~~$cell.closest('.row').data('row'),
+        ~~$cell.data('col')
+      )
+    )
   )
 )(window, jQuery)

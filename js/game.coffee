@@ -48,6 +48,9 @@
       @.generatorInterval = null
       @.trigger(@.GAME_OVER)
 
+    choose: (x, y) ->
+      # TODO
+
     on: (event, callback) ->
       @.events.push({
         'event': event
