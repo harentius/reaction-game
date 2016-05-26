@@ -68,6 +68,7 @@
       else
         return ~~cellSizeJ - 2
 
+
   global.Reaction ||= {}
   global.Reaction.Grid = Grid
 )(window, jQuery)

@@ -6,12 +6,12 @@
       @.$container = $container
       @.width = width
       @.height = height
-      @.interval = null
+      @.config = Reaction.config
+      @.generatorInterval = null
 
     start: () ->
-      return if @.interval
-      config = Reaction.config
-      state = new Reaction.State(config.availabilityAreaDistance, config.minAvailableNumbers)
+      return if @.generatorInterval
+      state = new Reaction.State(@.config.availabilityAreaDistance, @.config.minAvailableNumbers)
       stateManager = new Reaction.StateManager(state)
       dataRenderer = new Reaction.DataRenderer(@.$container, @.width, @.height)
 
@@ -21,13 +21,15 @@
 
       mainLoop()
 
-      @.interval = setInterval(() ->
+      @.generatorInterval = setInterval(() ->
         mainLoop()
-      , config.gameTickInterval)
+      , @.config.gameTickInterval)
 
     stop: () ->
-      clearInterval(@.interval)
-      @.interval = null
+      clearInterval(@.generatorInterval)
+      @.generatorInterval = null
+
+
   global.Reaction ||= {}
   global.Reaction.Game = Game
 )(window)

@@ -2,7 +2,6 @@
   'use strict'
 
   global.Reaction ||= {}
-
   global.Reaction.config =
     availabilityAreaDistance: 1
     minAvailableNumbers: 5
