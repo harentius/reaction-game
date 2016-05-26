@@ -7,5 +7,5 @@
     availabilityAreaDistance: 1
     minAvailableNumbers: 5
     gameTickInterval: 400
-    selectionInterval: 5000
+    selectionDeadline: 5000
 )(window)

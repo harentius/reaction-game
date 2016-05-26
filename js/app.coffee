@@ -2,23 +2,20 @@
   'use strict'
 
   $(() ->
-    config = Reaction.config
-    state = new Reaction.State(config.availabilityAreaDistance, config.minAvailableNumbers)
-    stateManager = new Reaction.StateManager(state)
-    dataRenderer = new Reaction.DataRenderer(
+    $container = $('.container')
+    game = new Reaction.Game(
       $('#reaction-grid'),
-      $('.container').width(),
-      $('.container').height() - $('.nav-wrapper').height(),
+      $container.width(),
+      $container.height() - $('.nav-wrapper').height()
     )
 
-    mainLoop = () ->
-      stateManager.tick()
-      dataRenderer.render(state)
+    $('#new-game').on('click', () ->
+      game.start()
+      $('.info-wrapper').show()
+    )
 
-    mainLoop()
-
-    setInterval(() ->
-      mainLoop()
-    , config.gameTickInterval)
+    $('#stop-game').on('click', () ->
+      game.stop()
+    )
   )
 )(window, jQuery)

@@ -25,23 +25,45 @@ body {
   display: inline-block;
 }
 
-.game-button {
+.control-button {
   margin: 5px 10px 5px 0;
-  background: #158252;
   color: #ffffff;
   font-size: 18px;
-  border: 1px solid #136d43;
 
   &:hover, &:visited, &:active, &:focus {
-    background: #14925f;
     color: #ffffff;
     outline: none;
+  }
+
+  &.start {
+    background: #158252;
+    border: 1px solid #136d43;
+
+    &:hover, &:visited, &:active, &:focus {
+      background: #14925f;
+    }
+  }
+
+  &.stop {
+    background: #978425;
+    border: 1px solid #69591c;
+
+    &:hover, &:visited, &:active, &:focus {
+      background: #aa9728;
+    }
   }
 }
 
 .info-wrapper {
-  color: #346164;
+  display: none;
+  color: #fff;
   font-size: 18px;
   height: @nav-panel-height;
   line-height: @nav-panel-height;
+
+  > div {
+    display: inline-block;
+    float: left;
+    margin-right: 20px;
+  }
 }
