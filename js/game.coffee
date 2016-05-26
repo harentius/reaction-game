@@ -17,16 +17,17 @@
       @.generatorInterval = null
       @.deadlineInterval = null
       @.events = []
+      @.state = null
 
     start: () ->
       return if @.generatorInterval
-      state = new Reaction.State(@.config.availabilityAreaDistance, @.config.minAvailableNumbers)
-      stateManager = new Reaction.StateManager(state)
+      @.state = new Reaction.State(@.config.availabilityAreaDistance, @.config.minAvailableNumbers)
+      stateManager = new Reaction.StateManager(@.state)
       dataRenderer = new Reaction.DataRenderer(@.$container, @.width, @.height)
 
       @.generatorInterval = Reaction.immediateInterval(() =>
         stateManager.tick()
-        dataRenderer.render(state)
+        dataRenderer.render(@.state)
         @.timeLeft = @.config.selectionDeadline + @.config.selectionDeadlineUpdateInterval
       , @.config.gameTickInterval)
 
@@ -49,7 +50,9 @@
       @.trigger(@.GAME_OVER)
 
     choose: (x, y) ->
-      # TODO
+      if (@.state.getXY(x, y) == @.state.getMax())
+        @.score += 100
+      @.trigger(@.SCORE_CHANGED)
 
     on: (event, callback) ->
       @.events.push({

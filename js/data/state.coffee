@@ -31,15 +31,31 @@
       @._updateAvailablePlaces(x, y)
       @._updateAvailableNumbers(value)
 
+    getXY: (x, y, def = null) ->
+      index = @._getIndex(x, y)
+
+      return def if index == null
+      return @.data[index][2]
+
+    getMax: () ->
+      return null if @.data.length < 1
+
+      max = @.data[0][2]
+
+      for v in @.data
+        max = v[2] if max < v[2]
+
+      max
+
     _getIndex: (x, y) ->
-      for val, i in @.data
-        return i if val[0] == x and val[1] == y
+      for v, i in @.data
+        return i if v[0] == x and v[1] == y
 
       null
 
     _getIndexOfAvailable: (x, y) ->
-      for val, i in @.availablePlaces
-        return i if val[0] == x and val[1] == y
+      for v, i in @.availablePlaces
+        return i if v[0] == x and v[1] == y
 
       null
 
