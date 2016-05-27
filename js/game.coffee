@@ -71,6 +71,7 @@
         @.refreshTimeLeft()
         @.trigger(@.CHOOSE_RIGHT, [x, y])
       else
+        @.score = Math.max(@.score - 10, 0)
         @.trigger(@.CHOOSE_WRONG, [x, y])
 
       @.trigger(@.SCORE_CHANGED)
