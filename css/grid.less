@@ -12,14 +12,18 @@
   }
 
   .cell {
+    background: #b0c3b8;
     display: inline-block;
     float: left;
-    background: #ccdfd4;
     margin: 1px;
-    cursor: pointer;
 
-    &:hover {
-      background: #a9bcb1;
+    &.filled {
+      background: #ccdfd4;
+      cursor: pointer;
+
+      &:hover {
+        background: #a9bcb1;
+      }
     }
   }
 }

@@ -44,7 +44,12 @@
       $container.html(content)
 
     set: (i, j, value) ->
-      @.$container.find($("[data-row='#{i}'] [data-col='#{j}']")).text(value)
+      @.$container
+        .find($("[data-row='#{i}'] [data-col='#{j}']"))
+          .text(value)
+          .removeClass('filled')
+          .addClass(if value && value != ' ' then 'filled' else '')
+        .end()
 
     getBounds: () -> @.bounds
 

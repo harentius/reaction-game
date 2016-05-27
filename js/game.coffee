@@ -6,6 +6,8 @@
     GAME_OVER: 'game_over'
     LEFT_TIME_CHANGED: 'left_time_changed'
     SCORE_CHANGED: 'score_changed'
+    CHOOSE_RIGHT: 'choose_right'
+    CHOOSE_WRONG: 'choose_wrong'
 
     constructor: ($container, width, height) ->
       @.$container = $container
@@ -18,17 +20,18 @@
       @.deadlineInterval = null
       @.events = []
       @.state = null
+      @.dataRenderer = null
 
     start: () ->
       return if @.generatorInterval
       @.state = new Reaction.State(@.config.availabilityAreaDistance, @.config.minAvailableNumbers)
       stateManager = new Reaction.StateManager(@.state)
-      dataRenderer = new Reaction.DataRenderer(@.$container, @.width, @.height)
+      @.dataRenderer = new Reaction.DataRenderer(@.$container, @.width, @.height)
+      @.refreshTimeLeft()
 
       @.generatorInterval = Reaction.immediateInterval(() =>
         stateManager.tick()
-        dataRenderer.render(@.state)
-        @.timeLeft = @.config.selectionDeadline + @.config.selectionDeadlineUpdateInterval
+        @.dataRenderer.render(@.state)
       , @.config.gameTickInterval)
 
       @.deadlineInterval = Reaction.immediateInterval(() =>
@@ -49,9 +52,27 @@
       @.generatorInterval = null
       @.trigger(@.GAME_OVER)
 
+    refreshTimeLeft: () ->
+      @.timeLeft = @.config.selectionDeadline + @.config.selectionDeadlineUpdateInterval
+      @.trigger(@.LEFT_TIME_CHANGED)
+
+    renderXY: (x, y) ->
+      @.dataRenderer.renderXY(x, y, @.state)
+
+    renderGrid: () ->
+      @.dataRenderer.render(@.state)
+
     choose: (x, y) ->
-      if (@.state.getXY(x, y) == @.state.getMax())
-        @.score += 100
+      max = @.state.getMax()
+
+      if (@.state.getXY(x, y) == max)
+        @.score += ~~(4 + 3 * Math.log(max) + 2.5 * @.getTimeLeftInSeconds())
+        @.state.removeXY(x, y)
+        @.refreshTimeLeft()
+        @.trigger(@.CHOOSE_RIGHT, [x, y])
+      else
+        @.trigger(@.CHOOSE_WRONG, [x, y])
+
       @.trigger(@.SCORE_CHANGED)
 
     on: (event, callback) ->
@@ -60,12 +81,12 @@
         'callback': callback
       })
 
-    trigger: (event) ->
+    trigger: (event, data = []) ->
       for e in @.events
         if e.event == event
-          e.callback.call(@)
+          e.callback.call(@, data)
 
-    getHumanizedTimeLeft: () ->
+    getTimeLeftInSeconds: () ->
       ~~@.timeLeft / @.config.selectionDeadlineUpdateInterval
 
     getScore: () ->

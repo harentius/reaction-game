@@ -8,6 +8,10 @@
       @.height = height
       @.grid = null
 
+    renderXY: (x, y, state) ->
+      val = state.getXY(x, y)
+      @.grid.set(x, y, if val then val else ' ')
+
     render: (state) ->
       data = state.getData()
 

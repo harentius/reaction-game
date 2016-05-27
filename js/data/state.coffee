@@ -37,6 +37,13 @@
       return def if index == null
       return @.data[index][2]
 
+    removeXY: (x, y) ->
+      index = @._getIndex(x, y)
+
+      if index != null
+        @.data.splice(index, 1)
+        @.availablePlaces.push([x, y])
+
     getMax: () ->
       return null if @.data.length < 1
 
