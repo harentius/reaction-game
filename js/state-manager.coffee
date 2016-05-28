@@ -7,8 +7,7 @@
       @.generateRandomNumberAtXY(0, 0)
 
     tick: () ->
-      @.generateRandomNumberAtRandomPosition()
-      @.generateRandomNumberAtRandomPosition()
+      @.generateRandomNumberAtRandomPosition() for i in [1..Reaction.config.newNumbersOnTick]
 
     generateRandomNumberAtRandomPosition: () ->
       availablePlaces = @.state.getAvailablePlaces()

@@ -26,11 +26,20 @@
         game.renderXY(data[0], data[1])
       ).on(game.CHOOSE_WRONG, (data) ->
         game.renderXY(data[0], data[1])
+      ).on(game.GAME_STARTED, () ->
+        $('.info-wrapper').show()
+        $(document).on('click', '.cell.filled', (e) ->
+          $cell = $(e.target).closest('.cell')
+          game.choose(
+            ~~$cell.closest('.row').data('row'),
+            ~~$cell.data('col')
+          )
+        )
       ).on(game.GAME_OVER, () ->
         shareText =  "I reached score #{game.getScore()} in Reaction Game!"
         $(document)
-          .off('click')
-          .prop('title', shareText)
+        .off('click')
+        .prop('title', shareText)
 
         Ya.share2('share',
           theme:
@@ -45,15 +54,6 @@
 
         $('#result-score').text(game.getScore())
         $('#game-over-dialog').modal()
-      ).on(game.GAME_STARTED, () ->
-        $('.info-wrapper').show()
-        $(document).on('click', '.cell.filled', (e) ->
-          $cell = $(e.target).closest('.cell')
-          game.choose(
-            ~~$cell.closest('.row').data('row'),
-            ~~$cell.data('col')
-          )
-        )
-    )
+      )
   )
 )(window, jQuery)

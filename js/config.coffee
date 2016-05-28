@@ -8,4 +8,5 @@
     gameTickInterval: 2000
     selectionDeadline: 5000
     selectionDeadlineUpdateInterval: 1000
+    newNumbersOnTick: 2
 )(window)

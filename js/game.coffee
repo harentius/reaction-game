@@ -3,6 +3,7 @@
 
   class Game
     GAME_STARTED: 'game_started'
+    NEW_NUMBERS_GENERATED: 'digits_generated'
     GAME_OVER: 'game_over'
     LEFT_TIME_CHANGED: 'left_time_changed'
     SCORE_CHANGED: 'score_changed'
@@ -32,6 +33,8 @@
 
       @.generatorInterval = Reaction.immediateInterval(() =>
         stateManager.tick()
+        data = @.state.getData()
+        @.trigger(@.NEW_NUMBERS_GENERATED, data.slice(data.length - @.config.newNumbersOnTick))
         @.dataRenderer.render(@.state)
       , @.config.gameTickInterval)
 
