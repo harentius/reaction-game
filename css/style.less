@@ -1,3 +1,4 @@
+@import-once "colors";
 @nav-panel-height: 50px;
 
 html, body {
@@ -27,36 +28,36 @@ body {
 
 .control-button {
   margin: 5px 10px 5px 0;
-  color: #ffffff;
+  color: @control-button-text-color;
   font-size: 18px;
 
   &:hover, &:visited, &:active, &:focus {
-    color: #ffffff;
+    color: @control-button-text-color;
     outline: none;
   }
 
   &.start {
-    background: #158252;
-    border: 1px solid #136d43;
+    background: @control-button-start-background;
+    border: 1px solid @control-button-start-border-background;
 
     &:hover, &:visited, &:active, &:focus {
-      background: #14925f;
+      background: @control-button-start-hover-background;
     }
   }
 
   &.stop {
-    background: #978425;
-    border: 1px solid #69591c;
+    background: @control-button-stop-background;
+    border: 1px solid @control-button-stop-border-background;
 
     &:hover, &:visited, &:active, &:focus {
-      background: #aa9728;
+      background: @control-button-stop-hover-background;
     }
   }
 }
 
 .info-wrapper {
   display: none;
-  color: #fff;
+  color: @info-text-color;
   font-size: 18px;
   height: @nav-panel-height;
   line-height: @nav-panel-height;
