@@ -26,7 +26,7 @@
 
     start: () ->
       return if @.generatorInterval
-      @.state = new Reaction.State(@.config.availabilityAreaDistance, @.config.minAvailableNumbers)
+      @.state = new Reaction.State(@.config.availabilityAreaDistance, @.config.minAvailableNumbers, @.config.minAvailablePlaces)
       stateManager = new Reaction.StateManager(@.state)
       @.dataRenderer = new Reaction.DataRenderer(@.$container, @.width, @.height)
       @.refreshTimeLeft()

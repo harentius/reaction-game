@@ -2,12 +2,13 @@
   'use strict'
 
   class State
-    constructor: (availabilityAreaDistance = 1, minAvailableNumbers = 5) ->
+    constructor: (availabilityAreaDistance = 1, minAvailableNumbers = 5, minAvailablePlaces = 5) ->
       @.data = []
       @.availablePlaces = []
       @.availableNumbers = []
       @.availabilityAreaDistance = availabilityAreaDistance
       @.minAvailableNumbers = minAvailableNumbers
+      @.minAvailablePlaces = minAvailablePlaces
       @.maxNumberWasAvailable = minAvailableNumbers
 
       for i in [1..minAvailableNumbers]
@@ -85,6 +86,7 @@
       index = @._getIndexOfAvailable(x, y)
       @.availablePlaces.splice(index, 1) if index != null
 
+      return if @.availablePlaces.length > @.minAvailablePlaces
       # Update available places
       for i in [(x - @.availabilityAreaDistance)..(x + @.availabilityAreaDistance)]
         for j in [(y - @.availabilityAreaDistance)..(y + @.availabilityAreaDistance)]
