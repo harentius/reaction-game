@@ -27,7 +27,23 @@
       ).on(game.CHOOSE_WRONG, (data) ->
         game.renderXY(data[0], data[1])
       ).on(game.GAME_OVER, () ->
-        $(document).off('click')
+        shareText =  "I reached score #{game.getScore()} in Reaction Game!"
+        $(document)
+          .off('click')
+          .prop('title', shareText)
+
+        Ya.share2('share',
+          theme:
+            services: 'facebook,twitter,vkontakte,gplus'
+            counter: true
+            lang: 'uk'
+            size: 'm'
+          content:
+            title: shareText
+            description: shareText
+        )
+
+        $('#result-score').text(game.getScore())
         $('#game-over-dialog').modal()
       ).on(game.GAME_STARTED, () ->
         $('.info-wrapper').show()

@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Reaction game</title>
+        <title>Play Reaction Game</title>
 
         <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
         <link href="css/style.css" media="all" rel="stylesheet" type="text/css" />
@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="nav-wrapper col-xs-12">
                     <div class="row">
-                        <div class="controls-wrapper col-xs-6">
+                        <div class="controls-wrapper text-right col-xs-6">
                             <button id="new-game" class="btn control-button start">New game</button>
                             <button id="stop-game" class="btn control-button stop">Stop game</button>
                         </div>
@@ -23,7 +23,7 @@
                                 <span>Time left: </span>
                                 <b id="time-left"></b>
                             </div>
-                            <div class="time-wrapper">
+                            <div class="score-wrapper">
                                 <span>Score: </span>
                                 <b id="score"></b>
                             </div>
@@ -42,8 +42,10 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <p>Game Over</p>
-                        <p>Share</p>
+                        <h3 class="text-center">Game Over</h3>
+                        <h4>Reached score: <b id="result-score"></b></h4>
+                        <h4>If you liked game, please tell friends:</h4>
+                        <div id="share"></div>
                     </div>
                 </div>
             </div>
@@ -51,6 +53,8 @@
 
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
+
         <script src="js/lib.js"></script>
         <script src="js/app.js"></script>
     </body>
