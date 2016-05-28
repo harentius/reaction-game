@@ -1,0 +1,41 @@
+@import "colors";
+
+@keyframes score-increased {
+  from { color: @score-increasing-text-color }
+  to { color: @info-text-color }
+}
+
+.score-increased {
+  animation-name: score-increased;
+  animation-duration: 400ms;
+}
+
+@keyframes score-decreased {
+  from { color: @score-decreasing-text-color }
+  to { color: @info-text-color }
+}
+
+.score-decreased {
+  animation-name: score-decreased;
+  animation-duration: 400ms;
+}
+
+@keyframes right-selection {
+  from { background-color: @cell-right-selection-background }
+  to { background-color: @cell-background }
+}
+
+.right-selection {
+  animation-name: right-selection;
+  animation-duration: 400ms;
+}
+
+@keyframes wrong-selection {
+  from { background-color: @cell-wrong-selection-background }
+  to { background-color: @cell-background }
+}
+
+.wrong-selection{
+  animation-name: wrong-selection;
+  animation-duration: 400ms;
+}

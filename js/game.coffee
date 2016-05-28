@@ -33,9 +33,9 @@
 
       @.generatorInterval = Reaction.immediateInterval(() =>
         stateManager.tick()
+        @.dataRenderer.render(@.state)
         data = @.state.getData()
         @.trigger(@.NEW_NUMBERS_GENERATED, data.slice(data.length - @.config.newNumbersOnTick))
-        @.dataRenderer.render(@.state)
       , @.config.gameTickInterval)
 
       @.deadlineInterval = Reaction.immediateInterval(() =>

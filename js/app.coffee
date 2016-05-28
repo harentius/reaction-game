@@ -3,6 +3,7 @@
 
   $(() ->
     $container = $('.container')
+    share = null
     game = new Reaction.Game(
       $('#reaction-grid'),
       $container.width(),
@@ -21,12 +22,25 @@
       .on(game.LEFT_TIME_CHANGED, () ->
         $('#time-left').text(@.getTimeLeftInSeconds())
       ).on(game.SCORE_CHANGED, () ->
-        $('#score').text(@.getScore())
+        $score = $('#score')
+        oldVal = $score.text()
+        newVal = @.getScore()
+        $score.text(newVal)
+
+        if newVal > 0
+          $score.animo({ animation: if newVal > oldVal then 'score-increased' else 'score-decreased' })
       ).on(game.CHOOSE_RIGHT, (data) ->
-        game.renderXY(data[0], data[1])
+        $(".row[data-row='#{data[0]}'] .cell[data-col='#{data[1]}']").animo({ animation: 'right-selection', duration: 0.3 }, () ->
+          game.renderXY(data[0], data[1])
+        )
       ).on(game.CHOOSE_WRONG, (data) ->
         game.renderXY(data[0], data[1])
+        $(".row[data-row='#{data[0]}'] .cell[data-col='#{data[1]}']").animo({ animation: 'wrong-selection' })
+      ).on(game.NEW_NUMBERS_GENERATED, (data) ->
+        for e in data
+          $(".row[data-row='#{e[0]}'] .cell[data-col='#{e[1]}']").animo({ animation: 'bounceIn' })
       ).on(game.GAME_STARTED, () ->
+        share.destroy() if share != null
         $('.info-wrapper').show()
         $(document).on('click', '.cell.filled', (e) ->
           $cell = $(e.target).closest('.cell')
@@ -41,7 +55,7 @@
         .off('click')
         .prop('title', shareText)
 
-        Ya.share2('share',
+        share = Ya.share2('share',
           theme:
             services: 'facebook,twitter,vkontakte,gplus'
             counter: true

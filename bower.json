@@ -10,7 +10,8 @@
   "homepage": "",
   "dependencies": {
     "jquery": "^2.2.3",
-    "bootstrap": "^3.3.6"
+    "bootstrap": "^3.3.6",
+    "animo.js": "^1.0.3"
   },
   "devDependencies": {
     "jasmine-standalone": "^2.3.2"
