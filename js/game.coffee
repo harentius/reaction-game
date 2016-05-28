@@ -21,6 +21,7 @@
       @.events = []
       @.state = null
       @.dataRenderer = null
+      @.active = false
 
     start: () ->
       return if @.generatorInterval
@@ -43,13 +44,16 @@
       , @.config.selectionDeadlineUpdateInterval)
 
       @.score = 0
+      @.active = true
       @.trigger(@.SCORE_CHANGED)
       @.trigger(@.GAME_STARTED)
 
     stop: () ->
+      return if !@.active
       clearInterval(@.generatorInterval)
       clearInterval(@.deadlineInterval)
       @.generatorInterval = null
+      @.active = false
       @.trigger(@.GAME_OVER)
 
     refreshTimeLeft: () ->
@@ -81,6 +85,8 @@
         'event': event
         'callback': callback
       })
+
+      this
 
     trigger: (event, data = []) ->
       for e in @.events
