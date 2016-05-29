@@ -17,7 +17,6 @@ body {
 }
 
 .container {
-  width: 90%;
   height: 100%;
   text-align: center;
 }
@@ -47,6 +46,7 @@ body {
   }
 
   &.stop {
+    display: none;
     background: @control-button-stop-background;
     border: 1px solid @control-button-stop-border-background;
 
@@ -59,9 +59,19 @@ body {
 .info-wrapper {
   display: none;
   color: @info-text-color;
-  font-size: 18px;
   height: @nav-panel-height;
-  line-height: @nav-panel-height;
+
+  .explanation {
+    font-size: 14px;
+  }
+
+  .value {
+    font-size: 19px;
+  }
+
+  p {
+    margin: 0;
+  }
 
   > div {
     display: inline-block;

@@ -12,10 +12,14 @@
 
     $('#new-game').on('click', () ->
       game.start()
+      $(this).hide()
+      $('#stop-game').show()
     )
 
     $('#stop-game').on('click', () ->
       game.stop()
+      $(this).hide()
+      $('#new-game').show()
     )
 
     game
