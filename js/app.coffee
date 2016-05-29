@@ -12,14 +12,10 @@
 
     $('#new-game').on('click', () ->
       game.start()
-      $(this).hide()
-      $('#stop-game').show()
     )
 
     $('#stop-game').on('click', () ->
       game.stop()
-      $(this).hide()
-      $('#new-game').show()
     )
 
     game
@@ -53,6 +49,8 @@
             ~~$cell.data('col')
           )
         )
+        $('#stop-game').show()
+        $('#new-game').hide()
       ).on(game.GAME_OVER, () ->
         shareText =  "I reached score #{game.getScore()} in Reaction Game!"
         $(document)
@@ -71,6 +69,8 @@
         )
 
         $('#result-score').text(game.getScore())
+        $('#stop-game').hide()
+        $('#new-game').show()
         $('#game-over-dialog').modal()
       )
   )
