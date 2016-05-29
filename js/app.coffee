@@ -66,6 +66,7 @@
           content:
             title: shareText
             description: shareText
+            image: 'img/reaction-game.png'
         )
 
         $('#result-score').text(game.getScore())
