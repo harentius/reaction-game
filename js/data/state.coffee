@@ -42,6 +42,7 @@
       index = @._getIndex(x, y)
 
       if index != null
+        val = @.getXY(x, y)
         @.data.splice(index, 1)
         @.availablePlaces.push([x, y])
 
@@ -74,7 +75,7 @@
       index = @.availableNumbers.indexOf(value)
       @.availableNumbers.splice(index, 1) if index != -1
       newMaxNumber = @.maxNumberWasAvailable + @.minAvailableNumbers - @.availableNumbers.length
-      return if newMaxNumber == @.maxNumberWasAvailable
+      return if newMaxNumber < 0 ||  newMaxNumber == @.maxNumberWasAvailable
 
       for i in [@.maxNumberWasAvailable + 1..newMaxNumber]
         @.availableNumbers.push(i)
