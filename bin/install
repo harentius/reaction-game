@@ -7,4 +7,5 @@ bower install
 npm install
 
 echo "prod" > "$base_dir/.env"
-"$bin_dir/update"
+
+./node_modules/gulp/bin/gulp.js
