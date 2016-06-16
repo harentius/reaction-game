@@ -26,7 +26,7 @@ gulp.task('less', function () {
 });
 
 gulp.task('coffee-lib', function () {
-    gulp.src(['./js/**/*.coffee', '!./js/app.coffee'])
+    gulp.src(['./js/**/*.coffee', '!./js/web/app.coffee'])
         .pipe(coffee())
         .pipe(concat('lib.js'))
         .pipe(gulp.dest('./public/js/'))
@@ -34,7 +34,7 @@ gulp.task('coffee-lib', function () {
 });
 
 gulp.task('coffee-app', function () {
-    gulp.src('./js/app.coffee')
+    gulp.src('./js/web/app.coffee')
         .pipe(coffee())
         .pipe(concat('app.js'))
         .pipe(gulp.dest('./public/js/'))
