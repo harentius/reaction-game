@@ -4,3 +4,5 @@
 /public/js/
 .env
 /build/*
+/public/index.html
+/public/tests.html

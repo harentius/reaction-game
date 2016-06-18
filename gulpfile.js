@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     watch = require('gulp-watch'),
     batch = require('gulp-batch'),
     rev = require('gulp-rev'),
+    rename = require('gulp-rename'),
     revReplace = require('gulp-rev-replace'),
     fs = require('fs'),
     argv = require('yargs').argv
@@ -68,6 +69,21 @@ gulp.task('coffee-spec', function () {
     ;
 });
 
+gulp.task('template-spec', ['coffee-lib'], function () {
+    var manifest = gulp.src([
+        './build/rev-manifest-lib.json'
+    ]);
+
+    return gulp.src('./public/tests.html.dist')
+        .pipe(revReplace({
+            manifest: manifest,
+            replaceInExtensions: ['.dist']
+        }))
+        .pipe(rename("tests.html"))
+        .pipe(gulp.dest('./public'))
+    ;
+});
+
 gulp.task('watch', function() {
     watch(['./js/**/*.coffee'], batch(function (events, cb) {
         gulp.start('default', cb);
@@ -89,8 +105,12 @@ gulp.task('template', ['coffee-lib', 'coffee-app', 'less'], function () {
         './build/rev-manifest-css.json'
     ]);
 
-    return gulp.src('./public/index.html')
-        .pipe(revReplace({manifest: manifest}))
+    return gulp.src('./public/index.html.dist')
+        .pipe(revReplace({
+            manifest: manifest,
+            replaceInExtensions: ['.dist']
+        }))
+        .pipe(rename("index.html"))
         .pipe(gulp.dest('./public'))
     ;
 });
@@ -104,9 +124,7 @@ gulp.task('clean-assets', function () {
 var tasks = ['coffee-lib', 'coffee-app', 'less', 'template'];
 
 if (env === 'dev') {
-    tasks.push('watch');
-    tasks.push('coffee-spec-common');
-    tasks.push('coffee-spec');
+    tasks.push('watch', 'coffee-spec-common', 'coffee-spec', 'template-spec');
 }
 
 gulp.task('default', tasks);
