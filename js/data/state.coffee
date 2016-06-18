@@ -9,7 +9,6 @@
       @.availabilityAreaDistance = availabilityAreaDistance
       @.minAvailableNumbers = minAvailableNumbers
       @.minAvailablePlaces = minAvailablePlaces
-      @.maxNumberWasAvailable = minAvailableNumbers
 
       for i in [1..minAvailableNumbers]
         @.availableNumbers.push(i)
@@ -38,13 +37,20 @@
       return def if index == null
       return @.data[index][2]
 
+    setMinAvailableNumbers: (value) ->
+      @.minAvailableNumbers = value
+
+    getMinAvailableNumbers: () ->
+      @.minAvailableNumbers
+
     removeXY: (x, y) ->
       index = @._getIndex(x, y)
 
       if index != null
-        val = @.getXY(x, y)
+        value = @.getXY(x, y)
         @.data.splice(index, 1)
         @.availablePlaces.push([x, y])
+        @.availableNumbers.push(value)
 
     getMax: () ->
       return null if @.data.length < 1
@@ -62,6 +68,12 @@
 
       null
 
+    _getIndexByValue: (value) ->
+      for v, i in @.data
+        return i if v[2] == value
+
+      null
+
     _getIndexOfAvailable: (x, y) ->
       for v, i in @.availablePlaces
         return i if v[0] == x and v[1] == y
@@ -74,13 +86,9 @@
     _updateAvailableNumbers: (value) ->
       index = @.availableNumbers.indexOf(value)
       @.availableNumbers.splice(index, 1) if index != -1
-      newMaxNumber = @.maxNumberWasAvailable + @.minAvailableNumbers - @.availableNumbers.length
-      return if newMaxNumber < 0 ||  newMaxNumber == @.maxNumberWasAvailable
 
-      for i in [@.maxNumberWasAvailable + 1..newMaxNumber]
-        @.availableNumbers.push(i)
-
-      @.maxNumberWasAvailable = newMaxNumber
+      while @.availableNumbers.length < @.minAvailableNumbers
+        @.availableNumbers.push(@._generateAvailableNumber())
 
     _updateAvailablePlaces: (x, y) ->
       # Remove element from available list
@@ -95,6 +103,20 @@
 
           if @._isAvailable(i, j)
             @.availablePlaces.push([i, j])
+
+    _generateAvailableNumber: () ->
+      maxMedian = ~~(Math.max.apply(Math, @.availableNumbers) / 2)
+      isAvailableNumber = (i) =>
+        @.availableNumbers.indexOf(i) == -1 and @._getIndexByValue(i) == null
+
+      for i in [maxMedian..1]
+        return i if isAvailableNumber(i)
+
+      i = maxMedian + 1
+
+      while true
+        return i if isAvailableNumber(i)
+        i++
 
   global.Reaction ||= {}
   global.Reaction.State = State

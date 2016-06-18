@@ -75,6 +75,7 @@
       if (@.state.getXY(x, y) == max)
         @.score += ~~(4 + 3 * Math.log(max) + 2.5 * @.getTimeLeftInSeconds())
         @.state.removeXY(x, y)
+        @.state.setMinAvailableNumbers(@.state.getMinAvailableNumbers() + 1)
         @.refreshTimeLeft()
         @.trigger(@.CHOOSE_RIGHT, [x, y])
       else
