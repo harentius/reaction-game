@@ -21,18 +21,19 @@
       @.deadlineInterval = null
       @.events = []
       @.state = null
+      @.numberManager = null
       @.dataRenderer = null
       @.active = false
 
     start: () ->
       return if @.generatorInterval
       @.state = new Reaction.State(@.config.availabilityAreaDistance, @.config.minAvailableNumbers, @.config.minAvailablePlaces)
-      numberManager = new Reaction.NumberManager(@.state)
+      @.numberManager = new Reaction.NumberManager(@.state)
       @.dataRenderer = new Reaction.DataRenderer(@.$container, @.width, @.height)
       @.refreshTimeLeft()
 
       @.generatorInterval = Reaction.immediateInterval(() =>
-        numberManager.tick()
+        @._tick()
         @.dataRenderer.render(@.state)
         data = @.state.getData()
         @.trigger(@.NEW_NUMBERS_GENERATED, data.slice(data.length - @.config.newNumbersOnTick))
@@ -103,6 +104,8 @@
     getScore: () ->
       @.score
 
+    _tick: () ->
+      @.numberManager.generateRandomNumberAtRandomPosition() for i in [1..Reaction.config.newNumbersOnTick]
 
   global.Reaction ||= {}
   global.Reaction.Game = Game
