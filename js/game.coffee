@@ -27,12 +27,12 @@
     start: () ->
       return if @.generatorInterval
       @.state = new Reaction.State(@.config.availabilityAreaDistance, @.config.minAvailableNumbers, @.config.minAvailablePlaces)
-      stateManager = new Reaction.StateManager(@.state)
+      numberManager = new Reaction.NumberManager(@.state)
       @.dataRenderer = new Reaction.DataRenderer(@.$container, @.width, @.height)
       @.refreshTimeLeft()
 
       @.generatorInterval = Reaction.immediateInterval(() =>
-        stateManager.tick()
+        numberManager.tick()
         @.dataRenderer.render(@.state)
         data = @.state.getData()
         @.trigger(@.NEW_NUMBERS_GENERATED, data.slice(data.length - @.config.newNumbersOnTick))

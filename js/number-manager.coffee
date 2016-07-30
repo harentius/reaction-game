@@ -1,7 +1,7 @@
 ((global) ->
   'use strict'
 
-  class StateManager
+  class NumberManager
     constructor: (state) ->
       @.state = state
       @.generateRandomNumberAtXY(0, 0)
@@ -26,5 +26,5 @@
 
       
   global.Reaction ||= {}
-  global.Reaction.StateManager = StateManager
+  global.Reaction.NumberManager = NumberManager
 )(window)
