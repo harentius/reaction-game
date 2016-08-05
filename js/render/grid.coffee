@@ -3,11 +3,7 @@
 
   class Grid
     constructor: (bounds, width, height, $container) ->
-#      bounds:
-#        minI: null
-#        maxI: null
-#        minJ: null
-#        maxJ: null
+#      bounds: { minI: null, maxI: null, minJ: null, maxJ: null }
       @.bounds = bounds
       @.$container = $container
       cellSize = @._calculateCellSize(bounds, width, height)

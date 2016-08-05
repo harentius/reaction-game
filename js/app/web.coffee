@@ -36,9 +36,6 @@
       ).on(game.CHOOSE_WRONG, (data) ->
         game.renderXY(data[0], data[1])
         $(".row[data-row='#{data[0]}'] .cell[data-col='#{data[1]}']").animo({ animation: 'wrong-selection' })
-      ).on(game.NEW_NUMBERS_GENERATED, (data) ->
-        for e in data
-          $(".row[data-row='#{e[0]}'] .cell[data-col='#{e[1]}']").animo({ animation: 'bounceIn' })
       ).on(game.GAME_STARTED, () ->
         share.destroy() if share != null
         $('.info-wrapper').show()

@@ -19,20 +19,11 @@
 
       bounds = @._getBounds(data)
 
-      if @._hasToInitGrid(bounds)
+      if not @.grid
         @.grid = new Reaction.Grid(bounds, @.width, @.height, @.$container)
 
       for val in data
         @.grid.set(val[0], val[1], if val[2] then val[2] else ' ')
-
-    _hasToInitGrid: (bounds) ->
-      return true if not @.grid
-
-      gridBounds = @.grid.getBounds()
-
-      return (gridBounds.minI != bounds.minI || gridBounds.maxI != bounds.maxI ||
-        gridBounds.minJ != bounds.minJ || gridBounds.maxJ != bounds.maxJ
-      )
 
     _getBounds: (data) ->
       bounds =

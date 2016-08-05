@@ -10,4 +10,20 @@
     selectionDeadline: 5000
     selectionDeadlineUpdateInterval: 1000
     newNumbersOnTick: 2
+    levels: [
+      {
+        timeToSolve: 5000
+        numbers: 3
+      },
+
+      {
+        timeToSolve: 6000
+        numbers: 5,
+      },
+
+      {
+        timeToSolve: 6000
+        numbers: 10,
+      },
+    ]
 )(window)

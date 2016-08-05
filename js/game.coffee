@@ -9,80 +9,60 @@
     SCORE_CHANGED: 'score_changed'
     CHOOSE_RIGHT: 'choose_right'
     CHOOSE_WRONG: 'choose_wrong'
+    LEVEL_START: 'level_start'
+    LEVEL_WIN: 'level_win'
+    LEVEL_LOST: 'level_lost'
 
     constructor: ($container, width, height) ->
       @.$container = $container
       @.width = width
       @.height = height
       @.config = Reaction.config
+      @.levelManager = new Reaction.LevelManager()
       @.timeLeft = null
       @.score = null
-      @.generatorInterval = null
-      @.deadlineInterval = null
+      @.timeLeftInterval = null
       @.events = []
-      @.state = null
-      @.numberManager = null
+      @.level = null
       @.dataRenderer = null
       @.active = false
 
     start: () ->
-      return if @.generatorInterval
-      @.state = new Reaction.State(@.config.availabilityAreaDistance, @.config.minAvailableNumbers, @.config.minAvailablePlaces)
-      @.numberManager = new Reaction.NumberManager(@.state)
-      @.dataRenderer = new Reaction.DataRenderer(@.$container, @.width, @.height)
-      @.refreshTimeLeft()
-
-      @.generatorInterval = Reaction.immediateInterval(() =>
-        @._tick()
-        @.dataRenderer.render(@.state)
-        data = @.state.getData()
-        @.trigger(@.NEW_NUMBERS_GENERATED, data.slice(data.length - @.config.newNumbersOnTick))
-      , @.config.gameTickInterval)
-
-      @.deadlineInterval = Reaction.immediateInterval(() =>
-        @.timeLeft = Math.max(@.timeLeft - @.config.selectionDeadlineUpdateInterval, 0)
-        @.trigger(@.LEFT_TIME_CHANGED)
-
-        if @.timeLeft <= 0
-          @.stop()
-      , @.config.selectionDeadlineUpdateInterval)
-
       @.score = 0
       @.active = true
       @.trigger(@.SCORE_CHANGED)
       @.trigger(@.GAME_STARTED)
+      @._createLevel(1)
 
     stop: () ->
       return if !@.active
-      clearInterval(@.generatorInterval)
-      clearInterval(@.deadlineInterval)
-      @.generatorInterval = null
+      clearInterval(@.timeLeftInterval)
       @.active = false
       @.trigger(@.GAME_OVER)
 
     refreshTimeLeft: () ->
-      @.timeLeft = @.config.selectionDeadline + @.config.selectionDeadlineUpdateInterval
+      @.timeLeft = @.level.timeToSolve
       @.trigger(@.LEFT_TIME_CHANGED)
 
     renderXY: (x, y) ->
-      @.dataRenderer.renderXY(x, y, @.state)
+      @.dataRenderer.renderXY(x, y, @.level.state)
 
     renderGrid: () ->
-      @.dataRenderer.render(@.state)
+      @.dataRenderer.render(@.level.state)
 
     choose: (x, y) ->
-      max = @.state.getMax()
+      max = @.level.state.getMax()
 
-      if (@.state.getXY(x, y) == max)
+      if (@.level.state.getXY(x, y) == max)
         @.score += ~~(4 + 3 * Math.log(max) + 2.5 * @.getTimeLeftInSeconds())
-        @.state.removeXY(x, y)
-        @.state.setMinAvailableNumbers(@.state.getMinAvailableNumbers() + 1)
-        @.refreshTimeLeft()
+        @.level.state.removeXY(x, y)
+        @.level.state.setMinAvailableNumbers(@.level.state.getMinAvailableNumbers() + 1)
         @.trigger(@.CHOOSE_RIGHT, [x, y])
       else
         @.score = Math.max(@.score - 10, 0)
         @.trigger(@.CHOOSE_WRONG, [x, y])
 
+      @.dataRenderer.render(@.level.state)
       @.trigger(@.SCORE_CHANGED)
 
     on: (event, callback) ->
@@ -104,8 +84,25 @@
     getScore: () ->
       @.score
 
-    _tick: () ->
-      @.numberManager.generateRandomNumberAtRandomPosition() for i in [1..Reaction.config.newNumbersOnTick]
+    _createLevel: (levelNumber) ->
+      @.level = @.levelManager.create(levelNumber)
+      @.dataRenderer = new Reaction.DataRenderer(@.$container, @.width, @.height)
+      @.refreshTimeLeft()
+      @.dataRenderer.render(@.level.state)
+      data = @.level.state.getData()
+      @.trigger(@.NEW_NUMBERS_GENERATED, data.slice(data.length - @.config.newNumbersOnTick))
+
+      @.timeLeftInterval = Reaction.immediateInterval(() =>
+        @.timeLeft = Math.max(@.timeLeft - @.config.selectionDeadlineUpdateInterval, 0)
+        @.trigger(@.LEFT_TIME_CHANGED)
+
+        if @.timeLeft <= 0
+          @.stop()
+      , @.config.selectionDeadlineUpdateInterval)
+
+    _winLevel: () ->
+
+    _lostLevel: () ->
 
   global.Reaction ||= {}
   global.Reaction.Game = Game
