@@ -14,17 +14,14 @@
     LEVEL_LOST: 'level_lost'
 
     constructor: ($container, width, height) ->
-      @.$container = $container
-      @.width = width
-      @.height = height
       @.config = Reaction.config
       @.levelManager = new Reaction.LevelManager()
+      @.dataRenderer = new Reaction.DataRenderer($container, width, height)
       @.timeLeft = null
       @.score = null
       @.timeLeftInterval = null
       @.events = []
       @.level = null
-      @.dataRenderer = null
       @.active = false
 
     start: () ->
@@ -86,7 +83,6 @@
 
     _createLevel: (levelNumber) ->
       @.level = @.levelManager.create(levelNumber)
-      @.dataRenderer = new Reaction.DataRenderer(@.$container, @.width, @.height)
       @.refreshTimeLeft()
       @.dataRenderer.render(@.level.state)
       data = @.level.state.getData()
