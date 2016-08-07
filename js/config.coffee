@@ -17,12 +17,12 @@
       },
 
       {
-        timeToSolve: 6000
+        timeToSolve: 8000
         numbers: 5,
       },
 
       {
-        timeToSolve: 6000
+        timeToSolve: 10000
         numbers: 10,
       },
     ]

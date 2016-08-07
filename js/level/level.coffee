@@ -5,6 +5,7 @@
     constructor: () ->
       @.state = null
       @.timeToSolve = null
+      @.number = null
 
 
   global.Reaction ||= {}

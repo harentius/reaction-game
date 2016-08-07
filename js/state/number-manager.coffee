@@ -4,7 +4,6 @@
   class NumberManager
     constructor: (state) ->
       @.state = state
-      @.generateRandomNumberAtXY(0, 0)
 
     generateRandomNumberAtRandomPosition: () ->
       availablePlaces = @.state.getAvailablePlaces()

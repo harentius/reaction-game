@@ -2,21 +2,27 @@
   'use strict'
 
   class Game
-    GAME_STARTED: 'game_started'
-    NEW_NUMBERS_GENERATED: 'digits_generated'
+    GAME_START: 'game_start'
     GAME_OVER: 'game_over'
-    LEFT_TIME_CHANGED: 'left_time_changed'
-    SCORE_CHANGED: 'score_changed'
+    GAME_WIN: 'game_win'
+
+    LEVEL_START: 'level_start'
+    LEVEL_OVER: 'level_over'
+    LEVEL_WIN: 'level_win'
+
     CHOOSE_RIGHT: 'choose_right'
     CHOOSE_WRONG: 'choose_wrong'
-    LEVEL_START: 'level_start'
-    LEVEL_WIN: 'level_win'
-    LEVEL_LOST: 'level_lost'
+
+    LEFT_TIME_CHANGED: 'left_time_changed'
+    SCORE_CHANGED: 'score_changed'
 
     constructor: ($container, width, height) ->
+      @.$container = $container
+      @.width = width
+      @.height = height
       @.config = Reaction.config
       @.levelManager = new Reaction.LevelManager()
-      @.dataRenderer = new Reaction.DataRenderer($container, width, height)
+      @.dataRenderer = null
       @.timeLeft = null
       @.score = null
       @.timeLeftInterval = null
@@ -28,8 +34,8 @@
       @.score = 0
       @.active = true
       @.trigger(@.SCORE_CHANGED)
-      @.trigger(@.GAME_STARTED)
-      @._createLevel(1)
+      @.trigger(@.GAME_START)
+      @._createLevel(0)
 
     stop: () ->
       return if !@.active
@@ -55,6 +61,9 @@
         @.level.state.removeXY(x, y)
         @.level.state.setMinAvailableNumbers(@.level.state.getMinAvailableNumbers() + 1)
         @.trigger(@.CHOOSE_RIGHT, [x, y])
+
+        if @.level.state.data.length == 0
+          @._winLevel()
       else
         @.score = Math.max(@.score - 10, 0)
         @.trigger(@.CHOOSE_WRONG, [x, y])
@@ -82,11 +91,11 @@
       @.score
 
     _createLevel: (levelNumber) ->
+      @.dataRenderer = new Reaction.DataRenderer(@.$container, @.width, @.height)
       @.level = @.levelManager.create(levelNumber)
+      @.trigger(@.LEVEL_START, [levelNumber])
       @.refreshTimeLeft()
       @.dataRenderer.render(@.level.state)
-      data = @.level.state.getData()
-      @.trigger(@.NEW_NUMBERS_GENERATED, data.slice(data.length - @.config.newNumbersOnTick))
 
       @.timeLeftInterval = Reaction.immediateInterval(() =>
         @.timeLeft = Math.max(@.timeLeft - @.config.selectionDeadlineUpdateInterval, 0)
@@ -97,8 +106,23 @@
       , @.config.selectionDeadlineUpdateInterval)
 
     _winLevel: () ->
+      @._endLevel()
+      @.trigger(@.LEVEL_WIN)
+      nextLevelNumber = @.level.number + 1
 
-    _lostLevel: () ->
+      if nextLevelNumber < @.config.levels.length
+        @._createLevel(nextLevelNumber)
+      else
+        @.trigger(@.GAME_WIN)
+
+    _overLevel: () ->
+      @._endLevel()
+      @.trigger(@.LEVEL_OVER)
+      @.trigger(@.GAME_OVER)
+
+    _endLevel: () ->
+      clearInterval(@.timeLeftInterval)
+
 
   global.Reaction ||= {}
   global.Reaction.Game = Game

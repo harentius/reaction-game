@@ -12,6 +12,7 @@
       level = new Reaction.Level()
       level.state = @.stateManager.create(levelConfig)
       level.timeToSolve = levelConfig.timeToSolve
+      level.number = levelNumber
 
       level
 
