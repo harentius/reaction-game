@@ -10,6 +10,30 @@
       $container.height() - $('.nav-wrapper').height()
     )
 
+    showSocialDialog = (title, shareText) ->
+      $('#game-over-dialog').find('.title').text(title)
+
+      $(document)
+        .off('click')
+        .prop('title', shareText)
+
+      share = Ya.share2('share',
+        theme:
+          services: 'facebook,twitter,vkontakte,gplus'
+          counter: true
+          lang: 'uk'
+          size: 'm'
+        content:
+          title: shareText
+          description: shareText
+          image: 'img/reaction-game.png'
+      )
+
+      $('#result-score').text(game.getScore())
+      $('#stop-game').hide()
+      $('#new-game').show()
+      $('#game-over-dialog').modal()
+
     $('#new-game').on('click', () ->
       game.start()
     )
@@ -49,27 +73,9 @@
         $('#stop-game').show()
         $('#new-game').hide()
       ).on(game.GAME_OVER, () ->
-        shareText =  "I reached score #{game.getScore()} in Reaction Game!"
-        $(document)
-        .off('click')
-        .prop('title', shareText)
-
-        share = Ya.share2('share',
-          theme:
-            services: 'facebook,twitter,vkontakte,gplus'
-            counter: true
-            lang: 'uk'
-            size: 'm'
-          content:
-            title: shareText
-            description: shareText
-            image: 'img/reaction-game.png'
-        )
-
-        $('#result-score').text(game.getScore())
-        $('#stop-game').hide()
-        $('#new-game').show()
-        $('#game-over-dialog').modal()
+        showSocialDialog('Game Over', "I reached score #{game.getScore()} in Reaction Game!")
+      ).on(game.GAME_WIN, () ->
+        showSocialDialog('You win!',"I wined Reaction Game with score #{game.getScore()}!")
       )
   )
 )(window, jQuery)

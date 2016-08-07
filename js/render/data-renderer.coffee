@@ -26,6 +26,9 @@
         @.grid.set(val[0], val[1], if val[2] then val[2] else ' ')
 
     _getBounds: (data) ->
+      if data.length == 0
+        return null
+
       bounds =
         minI: data[0][0]
         maxI: data[0][0]
