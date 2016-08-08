@@ -2,8 +2,9 @@
   'use strict'
 
   class DataRenderer
-    constructor: ($container, width, height) ->
+    constructor: ($container, $transitionScreen, width, height) ->
       @.$container = $container
+      @.$transitionScreen = $transitionScreen
       @.width = width
       @.height = height
       @.grid = null
@@ -24,6 +25,25 @@
 
       for val in data
         @.grid.set(val[0], val[1], if val[2] then val[2] else ' ')
+
+    renderTransition: (text, showingTime = 1500) ->
+      deferred = new $.Deferred()
+      containerPosition = @.$container.position()
+
+      @.$transitionScreen.show()
+      @.$transitionScreen.css({
+        width: @.$container.width()
+        height: @.$container.height()
+        top: containerPosition.top
+        left: containerPosition.left
+      })
+      @.$transitionScreen.text(text)
+      setTimeout(() =>
+        @.$transitionScreen.hide()
+        deferred.resolve()
+      , showingTime)
+
+      return deferred
 
     _getBounds: (data) ->
       if data.length == 0

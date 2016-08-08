@@ -16,8 +16,9 @@
     LEFT_TIME_CHANGED: 'left_time_changed'
     SCORE_CHANGED: 'score_changed'
 
-    constructor: ($container, width, height) ->
+    constructor: ($container, $transitionScreen, width, height) ->
       @.$container = $container
+      @.$transitionScreen = $transitionScreen
       @.width = width
       @.height = height
       @.config = Reaction.config
@@ -91,19 +92,24 @@
       @.score
 
     _createLevel: (levelNumber) ->
-      @.dataRenderer = new Reaction.DataRenderer(@.$container, @.width, @.height)
       @.level = @.levelManager.create(levelNumber)
       @.trigger(@.LEVEL_START, [levelNumber])
       @.refreshTimeLeft()
+      @.dataRenderer = new Reaction.DataRenderer(@.$container, @.$transitionScreen, @.width, @.height)
       @.dataRenderer.render(@.level.state)
+      @.dataRenderer.renderTransition("Ready for Level #{levelNumber + 1}?")
+        .done(() =>
+          @.dataRenderer.renderTransition('Go!', 500)
+            .done(() =>
+              @.timeLeftInterval = Reaction.immediateInterval(() =>
+                @.timeLeft = Math.max(@.timeLeft - @.config.selectionDeadlineUpdateInterval, 0)
+                @.trigger(@.LEFT_TIME_CHANGED)
 
-      @.timeLeftInterval = Reaction.immediateInterval(() =>
-        @.timeLeft = Math.max(@.timeLeft - @.config.selectionDeadlineUpdateInterval, 0)
-        @.trigger(@.LEFT_TIME_CHANGED)
-
-        if @.timeLeft <= 0
-          @.stop()
-      , @.config.selectionDeadlineUpdateInterval)
+                if @.timeLeft <= 0
+                  @.stop()
+              , @.config.selectionDeadlineUpdateInterval)
+            )
+        )
 
     _winLevel: () ->
       @._endLevel()

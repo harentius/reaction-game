@@ -49,6 +49,9 @@
             </div>
         </div>
 
+        <!-- Transition screen -->
+        <div id="transition-screen" class="transition-screen"></div>
+
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>

@@ -38,6 +38,10 @@
         attributes = @._compileAttributes(rowAttributes)
         content += "<div #{attributes}>#{rowContent}</div>"
       $container.html(content)
+      @.$container.css({
+        # 2 is a margin
+        width: sizeString + 2
+      })
 
     set: (i, j, value) ->
       @.$container

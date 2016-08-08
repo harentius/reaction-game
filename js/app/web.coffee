@@ -6,6 +6,7 @@
     share = null
     game = new Reaction.Game(
       $('#reaction-grid'),
+      $('#transition-screen'),
       $container.width(),
       $container.height() - $('.nav-wrapper').height()
     )
@@ -75,7 +76,7 @@
       ).on(game.GAME_OVER, () ->
         showSocialDialog('Game Over', "I reached score #{game.getScore()} in Reaction Game!")
       ).on(game.GAME_WIN, () ->
-        showSocialDialog('You win!',"I wined Reaction Game with score #{game.getScore()}!")
+        showSocialDialog('Congratulations! You win!',"I wined Reaction Game with score #{game.getScore()}!")
       )
   )
 )(window, jQuery)
