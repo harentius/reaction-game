@@ -6,6 +6,6 @@ base_dir=$(cd "$bin_dir/.." && pwd)
 bower install
 npm install
 
-echo "prod" > "$base_dir/.env"
+echo -n "prod" > "$base_dir/.env"
 
 ./node_modules/gulp/bin/gulp.js
