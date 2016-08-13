@@ -17,13 +17,33 @@
       },
 
       {
-        timeToSolve: 8000
-        numbers: 5,
+        timeToSolve: 6000
+        numbers: 5
       },
 
       {
         timeToSolve: 10000
-        numbers: 10,
+        numbers: 9
+      },
+
+      {
+        timeToSolve: 15000
+        numbers: 13
+      },
+
+      {
+        timeToSolve: 21000
+        numbers: 17
+      },
+
+      {
+        timeToSolve: 33000
+        numbers: 25
+      },
+
+      {
+        timeToSolve: 55000
+        numbers: 35
       },
     ]
 )(window)
