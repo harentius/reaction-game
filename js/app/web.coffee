@@ -61,6 +61,8 @@
       ).on(game.CHOOSE_WRONG, (data) ->
         game.renderXY(data[0], data[1])
         $(".row[data-row='#{data[0]}'] .cell[data-col='#{data[1]}']").animo({ animation: 'wrong-selection' })
+      ).on(game.LEVEL_START, (data) ->
+        $('#level').text(data[0] + 1)
       ).on(game.GAME_START, () ->
         share.destroy() if share != null
         $('.info-wrapper').show()

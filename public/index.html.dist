@@ -24,9 +24,15 @@
                         <p class="explanation">Time: </p>
                         <p class="value"><b id="time-left"></b></p>
                     </div>
+
                     <div class="score-wrapper">
                         <p class="explanation">Score: </p>
                         <p class="value"><b id="score"></b></p>
+                    </div>
+
+                    <div class="level-wrapper">
+                        <p class="explanation">Level: </p>
+                        <p class="value"><b id="level"></b></p>
                     </div>
                 </div>
             </div>
