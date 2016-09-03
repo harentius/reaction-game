@@ -5,17 +5,9 @@
     constructor: (state) ->
       @.state = state
 
-    generateRandomNumberAtRandomPosition: () ->
-      availablePlaces = @.state.getAvailablePlaces()
-      xy = availablePlaces[@.generateNumber(0, availablePlaces.length)]
-      @.generateRandomNumberAtXY(xy[0], xy[1])
-
     generateRandomNumberAtXY: (x, y) ->
       availableNumbers = @.state.getAvailableNumbers()
-      @.state.setXY(x, y, availableNumbers[@.generateNumber(0, availableNumbers.length)])
-
-    generateNumber: (min, max) ->
-      Math.floor(Math.random() * (max - min)) + min
+      @.state.setXY(x, y, availableNumbers[Reaction.generateNumber(0, availableNumbers.length - 1)])
 
     getData: () ->
       @.state.getData()

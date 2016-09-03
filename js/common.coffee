@@ -7,4 +7,7 @@
     setInterval(() ->
       callback()
     , interval)
+
+  global.Reaction.generateNumber = (min, max) ->
+    Math.floor(Math.random() * (max - min)) + min
 )(window)

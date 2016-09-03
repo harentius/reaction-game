@@ -92,7 +92,7 @@
       @.score
 
     _createLevel: (levelNumber) ->
-      @.level = @.levelManager.create(levelNumber)
+      @.level = @.levelManager.create(levelNumber, @.width, @.height)
       @.trigger(@.LEVEL_START, [levelNumber])
       @.refreshTimeLeft()
       @.dataRenderer = new Reaction.DataRenderer(@.$container, @.$transitionScreen, @.width, @.height)

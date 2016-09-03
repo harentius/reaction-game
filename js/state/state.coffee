@@ -2,20 +2,13 @@
   'use strict'
 
   class State
-    constructor: (availabilityAreaDistance = 1, minAvailableNumbers = 5, minAvailablePlaces = 5) ->
-      @.data = []
-      @.availablePlaces = []
-      @.availableNumbers = []
-      @.availabilityAreaDistance = availabilityAreaDistance
+    constructor: (minAvailableNumbers = 5) ->
       @.minAvailableNumbers = minAvailableNumbers
-      @.minAvailablePlaces = minAvailablePlaces
+      @.data = []
+      @.availableNumbers = []
 
       for i in [1..minAvailableNumbers]
         @.availableNumbers.push(i)
-
-      for i in [-availabilityAreaDistance..availabilityAreaDistance]
-        for j in [-availabilityAreaDistance..availabilityAreaDistance]
-          @.availablePlaces.push([i, j])
 
     getData: () ->
       @.data
@@ -23,12 +16,8 @@
     getAvailableNumbers: () ->
       @.availableNumbers
 
-    getAvailablePlaces: () ->
-      @.availablePlaces
-
     setXY: (x, y, value) ->
       @.data.push([x, y, value])
-      @._updateAvailablePlaces(x, y)
       @._updateAvailableNumbers(value)
 
     getXY: (x, y, def = null) ->
@@ -49,7 +38,6 @@
       if index != null
         value = @.getXY(x, y)
         @.data.splice(index, 1)
-        @.availablePlaces.push([x, y])
         @.availableNumbers.push(value)
 
     getMax: () ->
@@ -74,35 +62,12 @@
 
       null
 
-    _getIndexOfAvailable: (x, y) ->
-      for v, i in @.availablePlaces
-        return i if v[0] == x and v[1] == y
-
-      null
-
-    _isAvailable: (x, y) ->
-      @._getIndex(x, y) == null and @._getIndexOfAvailable(x, y) == null
-
     _updateAvailableNumbers: (value) ->
       index = @.availableNumbers.indexOf(value)
       @.availableNumbers.splice(index, 1) if index != -1
 
       while @.availableNumbers.length < @.minAvailableNumbers
         @.availableNumbers.push(@._generateAvailableNumber())
-
-    _updateAvailablePlaces: (x, y) ->
-      # Remove element from available list
-      index = @._getIndexOfAvailable(x, y)
-      @.availablePlaces.splice(index, 1) if index != null
-
-      return if @.availablePlaces.length > @.minAvailablePlaces
-      # Update available places
-      for i in [(x - @.availabilityAreaDistance)..(x + @.availabilityAreaDistance)]
-        for j in [(y - @.availabilityAreaDistance)..(y + @.availabilityAreaDistance)]
-          continue if i == x and j == y
-
-          if @._isAvailable(i, j)
-            @.availablePlaces.push([i, j])
 
     _generateAvailableNumber: () ->
       maxMedian = ~~(Math.max.apply(Math, @.availableNumbers) / 2)
