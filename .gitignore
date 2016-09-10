@@ -1,8 +1,7 @@
+/www/*
+!/www/img/
 /node_modules/
-/public/bower_components
-/public/css/
-/public/js/
 .env
 /build/*
-/public/index.html
-/public/tests.html
+platforms/
+plugins/
