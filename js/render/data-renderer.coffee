@@ -18,10 +18,8 @@
 
       return if !data
 
-      bounds = @._getBounds(data)
-
       if not @.grid
-        @.grid = new Reaction.Grid(bounds, @.width, @.height, @.$container)
+        @.grid = new Reaction.Grid(@._getBounds(data), @.width, @.height, @.$container)
 
       for val in data
         @.grid.set(val[0], val[1], if val[2] then val[2] else ' ')

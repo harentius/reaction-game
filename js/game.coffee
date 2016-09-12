@@ -51,9 +51,6 @@
     renderXY: (x, y) ->
       @.dataRenderer.renderXY(x, y, @.level.state)
 
-    renderGrid: () ->
-      @.dataRenderer.render(@.level.state)
-
     choose: (x, y) ->
       max = @.level.state.getMax()
 
@@ -69,7 +66,7 @@
         @.score = Math.max(@.score - 10, 0)
         @.trigger(@.CHOOSE_WRONG, [x, y])
 
-      @.dataRenderer.render(@.level.state)
+      @.dataRenderer.renderXY(x, y, @.level.state)
       @.trigger(@.SCORE_CHANGED)
 
     on: (event, callback) ->
