@@ -22,7 +22,6 @@
 
     showSocialDialog = (title, shareText) ->
       $('#game-over-dialog').find('.title').text(title)
-      $(global).off()
       $(document)
         .off('click')
         .prop('title', shareText)
@@ -46,15 +45,6 @@
 
     $('#new-game').on('click', () ->
       game.start()
-
-      $(global).on('resize', () ->
-        gameGridSize = calculateGameGridSize()
-        width = gameGridSize.width
-        height = gameGridSize.height
-        dataRenderer.setSize(width, height)
-        game.setSize(width, height)
-        game.render()
-      )
     )
 
     $('#stop-game').on('click', () ->
@@ -98,5 +88,14 @@
       ).on(game.GAME_WIN, () ->
         showSocialDialog('Congratulations! You win!',"I wined Reaction Game with score #{game.getScore()}!")
       )
+
+    $(global).on('resize', () ->
+      gameGridSize = calculateGameGridSize()
+      width = gameGridSize.width
+      height = gameGridSize.height
+      dataRenderer.setSize(width, height)
+      game.setSize(width, height)
+      game.render()
+    )
   )
 )(window, jQuery)
