@@ -49,6 +49,11 @@
 
     getHeight: () -> @.height
 
+    setSize: (width, height) ->
+      @.width = width
+      @.height = height
+      @.clearGrid()
+
     _getBounds: (data) ->
       if data.length == 0
         return null

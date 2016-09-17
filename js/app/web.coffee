@@ -2,15 +2,20 @@
   'use strict'
 
   $(() ->
-    $container = $('.container')
+    calculateGameGridSize = () ->
+      $container = $('.container')
 
-    gameGridWidth = $container.width()
-    gameGridHeight = $container.height() - $('.nav-wrapper').height()
+      return {
+        width: $container.width()
+        height:  $container.height() - $('.nav-wrapper').height()
+      }
+
+    gameGridSize = calculateGameGridSize()
     dataRenderer = new Reaction.DataRenderer(
       $('#reaction-grid'),
       $('#transition-screen'),
-      gameGridWidth,
-      gameGridHeight
+      gameGridSize.width,
+      gameGridSize.height
     )
     game = new Reaction.Game(dataRenderer)
     share = null
@@ -41,6 +46,12 @@
 
     $('#new-game').on('click', () ->
       game.start()
+
+      $(window).on('resize', () ->
+        gameGridSize = calculateGameGridSize()
+        dataRenderer.setSize(gameGridSize.width, gameGridSize.height)
+        game.render()
+      )
     )
 
     $('#stop-game').on('click', () ->
