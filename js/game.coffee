@@ -16,14 +16,12 @@
     LEFT_TIME_CHANGED: 'left_time_changed'
     SCORE_CHANGED: 'score_changed'
 
-    constructor: ($container, $transitionScreen, width, height) ->
-      @.$container = $container
-      @.$transitionScreen = $transitionScreen
-      @.width = width
-      @.height = height
+    constructor: (dataRenderer) ->
+      @.dataRenderer = dataRenderer
+      @.width = dataRenderer.getWidth()
+      @.height = dataRenderer.getHeight()
       @.config = Reaction.config
       @.levelManager = new Reaction.LevelManager()
-      @.dataRenderer = null
       @.timeLeft = null
       @.score = null
       @.timeLeftInterval = null
@@ -89,10 +87,10 @@
       @.score
 
     _createLevel: (levelNumber) ->
+      @.dataRenderer.clearGrid()
       @.level = @.levelManager.create(levelNumber, @.width, @.height)
       @.trigger(@.LEVEL_START, [levelNumber])
       @.refreshTimeLeft()
-      @.dataRenderer = new Reaction.DataRenderer(@.$container, @.$transitionScreen, @.width, @.height)
       @.dataRenderer.render(@.level.state)
       @.dataRenderer.renderTransition("Ready for Level #{levelNumber + 1}?")
         .done(() =>

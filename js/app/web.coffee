@@ -3,13 +3,17 @@
 
   $(() ->
     $container = $('.container')
-    share = null
-    game = new Reaction.Game(
+
+    gameGridWidth = $container.width()
+    gameGridHeight = $container.height() - $('.nav-wrapper').height()
+    dataRenderer = new Reaction.DataRenderer(
       $('#reaction-grid'),
       $('#transition-screen'),
-      $container.width(),
-      $container.height() - $('.nav-wrapper').height()
+      gameGridWidth,
+      gameGridHeight
     )
+    game = new Reaction.Game(dataRenderer)
+    share = null
 
     showSocialDialog = (title, shareText) ->
       $('#game-over-dialog').find('.title').text(title)

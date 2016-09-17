@@ -11,18 +11,20 @@
 
     renderXY: (x, y, state) ->
       val = state.getXY(x, y)
+      @._createGridIfNotExists(state)
       @.grid.set(x, y, if val then val else ' ')
 
     render: (state) ->
+      @._createGridIfNotExists(state)
       data = state.getData()
 
       return if !data
 
-      if not @.grid
-        @.grid = new Reaction.Grid(@._getBounds(data), @.width, @.height, @.$container)
-
       for val in data
         @.grid.set(val[0], val[1], if val[2] then val[2] else ' ')
+
+    clearGrid: () ->
+      @.grid = null
 
     renderTransition: (text, showingTime = 1500) ->
       deferred = new $.Deferred()
@@ -43,6 +45,10 @@
 
       return deferred
 
+    getWidth: () -> @.width
+
+    getHeight: () -> @.height
+
     _getBounds: (data) ->
       if data.length == 0
         return null
@@ -61,6 +67,10 @@
 
       return bounds
 
+    _createGridIfNotExists: (state) ->
+      return if @.grid
+
+      @.grid = new Reaction.Grid(@._getBounds(state.getData()), @.width, @.height, @.$container)
 
   global.Reaction ||= {}
   global.Reaction.DataRenderer = DataRenderer
