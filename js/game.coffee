@@ -40,9 +40,9 @@
 
     stop: () ->
       return if !@.active
-      clearInterval(@.timeLeftInterval)
       @.active = false
       @.trigger(@.GAME_OVER)
+      @._overLevel()
 
     refreshTimeLeft: () ->
       @.timeLeft = @.level.timeToSolve
@@ -96,8 +96,12 @@
       @.dataRenderer.render(@.level.state)
       @.dataRenderer.renderTransition("Ready for Level #{levelNumber + 1}?")
         .done(() =>
+          return if !@.active
+
           @.dataRenderer.renderTransition('Go!', 500)
             .done(() =>
+              return if !@.active
+
               @.timeLeftInterval = Reaction.immediateInterval(() =>
                 @.timeLeft = Math.max(@.timeLeft - @.config.selectionDeadlineUpdateInterval, 0)
                 @.trigger(@.LEFT_TIME_CHANGED)
@@ -121,7 +125,6 @@
     _overLevel: () ->
       @._endLevel()
       @.trigger(@.LEVEL_OVER)
-      @.trigger(@.GAME_OVER)
 
     _endLevel: () ->
       clearInterval(@.timeLeftInterval)
