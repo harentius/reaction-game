@@ -6,6 +6,8 @@
       @.state = null
       @.timeToSolve = null
       @.number = null
+      @.nX = null
+      @.nY = null
 
 
   global.Reaction ||= {}

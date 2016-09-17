@@ -11,13 +11,13 @@
       throw "Config for level #{levelNumber} not found" if !levelConfig
       level = new Reaction.Level()
       numbers = @.config.levels[levelNumber].numbers
-      level.state = @.stateManager.create(
-        levelConfig,
-        @._calculateNX(width, height, numbers)
-        @._calculateNY(width, height, numbers)
-      )
+      nX = @._calculateNX(width, height, numbers)
+      nY = @._calculateNY(width, height, numbers)
+      level.state = @.stateManager.create(levelConfig, nX, nY)
       level.timeToSolve = levelConfig.timeToSolve
       level.number = levelNumber
+      level.nX = nX
+      level.nY = nY
 
       level
 

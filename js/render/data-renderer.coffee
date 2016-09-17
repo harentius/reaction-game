@@ -9,14 +9,14 @@
       @.height = height
       @.grid = null
 
-    renderXY: (x, y, state) ->
-      val = state.getXY(x, y)
-      @._createGridIfNotExists(state)
+    renderXY: (x, y, level) ->
+      val = level.state.getXY(x, y)
+      @._createGridIfNotExists(level)
       @.grid.set(x, y, if val then val else ' ')
 
-    render: (state) ->
-      @._createGridIfNotExists(state)
-      data = state.getData()
+    render: (level) ->
+      @._createGridIfNotExists(level)
+      data = level.state.getData()
 
       return if !data
 
@@ -54,28 +54,10 @@
       @.height = height
       @.clearGrid()
 
-    _getBounds: (data) ->
-      if data.length == 0
-        return null
-
-      bounds =
-        minI: data[0][0]
-        maxI: data[0][0]
-        minJ: data[0][1]
-        maxJ: data[0][1]
-
-      for val in data
-        bounds.minI = val[0] if val[0] < bounds.minI
-        bounds.maxI = val[0] if val[0] > bounds.maxI
-        bounds.minJ = val[1] if val[1] < bounds.minJ
-        bounds.maxJ = val[1] if val[1] > bounds.maxJ
-
-      return bounds
-
-    _createGridIfNotExists: (state) ->
+    _createGridIfNotExists: (level) ->
       return if @.grid
 
-      @.grid = new Reaction.Grid(@._getBounds(state.getData()), @.width, @.height, @.$container)
+      @.grid = new Reaction.Grid(@.width, @.height, level.nX, level.nY, level.state.getData(), @.$container)
 
   global.Reaction ||= {}
   global.Reaction.DataRenderer = DataRenderer

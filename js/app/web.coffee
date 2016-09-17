@@ -7,7 +7,7 @@
 
       return {
         width: $container.width()
-        height:  $container.height() - $('.nav-wrapper').height()
+        height: $container.height() - $('.nav-wrapper').height()
       }
 
     gameGridSize = calculateGameGridSize()
@@ -22,7 +22,7 @@
 
     showSocialDialog = (title, shareText) ->
       $('#game-over-dialog').find('.title').text(title)
-
+      $(global).off()
       $(document)
         .off('click')
         .prop('title', shareText)
@@ -47,9 +47,12 @@
     $('#new-game').on('click', () ->
       game.start()
 
-      $(window).on('resize', () ->
+      $(global).on('resize', () ->
         gameGridSize = calculateGameGridSize()
-        dataRenderer.setSize(gameGridSize.width, gameGridSize.height)
+        width = gameGridSize.width
+        height = gameGridSize.height
+        dataRenderer.setSize(width, height)
+        game.setSize(width, height)
         game.render()
       )
     )

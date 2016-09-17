@@ -47,10 +47,10 @@
       @.trigger(@.LEFT_TIME_CHANGED)
 
     renderXY: (x, y) ->
-      @.dataRenderer.renderXY(x, y, @.level.state)
+      @.dataRenderer.renderXY(x, y, @.level)
 
     render: () ->
-      @.dataRenderer.render(@.level.state)
+      @.dataRenderer.render(@.level)
 
     choose: (x, y) ->
       max = @.level.state.getMax()
@@ -89,12 +89,16 @@
     getScore: () ->
       @.score
 
+    setSize: (width, height) ->
+      @.width = width
+      @.height = height
+
     _createLevel: (levelNumber) ->
       @.dataRenderer.clearGrid()
       @.level = @.levelManager.create(levelNumber, @.width, @.height)
       @.trigger(@.LEVEL_START, [levelNumber])
       @.refreshTimeLeft()
-      @.dataRenderer.render(@.level.state)
+      @.dataRenderer.render(@.level)
       @.dataRenderer.renderTransition("Ready for Level #{levelNumber + 1}?")
         .done(() =>
           return if !@.active

@@ -2,13 +2,13 @@
   'use strict'
 
   class Grid
-    constructor: (bounds, width, height, $container) ->
+    constructor: (width, height, nX, nY, data, $container) ->
 #      bounds: { minI: null, maxI: null, minJ: null, maxJ: null }
-      @.bounds = bounds
+      @.bounds = @._getBounds(data)
       @.$container = $container
-      cellSize = @._calculateCellSize(bounds, width, height)
+      cellSize = @._calculateCellSize(width, height, nX, nY)
 
-      @.init(bounds, cellSize, $container)
+      @.init(@.bounds, cellSize, $container)
 
     init: (bounds, cellSize, $container) ->
       content = ''
@@ -51,8 +51,6 @@
           .addClass(if value && value != ' ' then 'filled' else '')
         .end()
 
-    getBounds: () -> @.bounds
-
     _compileAttributes: (object, formatter = (n, v) -> "#{n}=\"#{v}\"") ->
       attrs = []
 
@@ -61,18 +59,30 @@
 
       attrs.join(' ')
 
-    _calculateCellSize: (bounds, gridWidth, gridHeight) ->
-      elementsI = Math.abs(bounds.maxI - bounds.minI) + 1
-      elementsJ = Math.abs(bounds.maxJ - bounds.minJ) + 1
-      cellSizeI = gridHeight / elementsI
-      cellSizeJ = gridWidth / elementsJ
+    _getBounds: (data) ->
+      if data.length == 0
+        return null
 
-      # Also accounts margins
-      if cellSizeI < cellSizeJ
-        return ~~cellSizeI - 4
-      else
-        return ~~cellSizeJ - 2
+      bounds =
+        minI: data[0][0]
+        maxI: data[0][0]
+        minJ: data[0][1]
+        maxJ: data[0][1]
 
+      for val in data
+        bounds.minI = val[0] if val[0] < bounds.minI
+        bounds.maxI = val[0] if val[0] > bounds.maxI
+        bounds.minJ = val[1] if val[1] < bounds.minJ
+        bounds.maxJ = val[1] if val[1] > bounds.maxJ
+
+      return bounds
+
+    _calculateCellSize: (gridWidth, gridHeight, nX, nY) ->
+      cellSizeI = gridHeight / nY
+      cellSizeJ = gridWidth / nX
+
+      # 2 - both side margins
+      return ~~(if (cellSizeI < cellSizeJ) then cellSizeI else cellSizeJ) - 2
 
   global.Reaction ||= {}
   global.Reaction.Grid = Grid
