@@ -3,8 +3,7 @@
 
   class Grid
     constructor: (width, height, nX, nY, data, $container) ->
-#      bounds: { minI: null, maxI: null, minJ: null, maxJ: null }
-      @.bounds = @._getBounds(data)
+      @.bounds = { minI: 0, maxI: nY - 1, minJ: 0, maxJ: nX - 1 }
       @.$container = $container
       cellSize = @._calculateCellSize(width, height, nX, nY)
 
@@ -58,24 +57,6 @@
         attrs.push(formatter(attr, value))
 
       attrs.join(' ')
-
-    _getBounds: (data) ->
-      if data.length == 0
-        return null
-
-      bounds =
-        minI: data[0][0]
-        maxI: data[0][0]
-        minJ: data[0][1]
-        maxJ: data[0][1]
-
-      for val in data
-        bounds.minI = val[0] if val[0] < bounds.minI
-        bounds.maxI = val[0] if val[0] > bounds.maxI
-        bounds.minJ = val[1] if val[1] < bounds.minJ
-        bounds.maxJ = val[1] if val[1] > bounds.maxJ
-
-      return bounds
 
     _calculateCellSize: (gridWidth, gridHeight, nX, nY) ->
       cellSizeI = gridHeight / nY
