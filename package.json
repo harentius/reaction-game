@@ -17,7 +17,6 @@
     "gulp-minify": "0.0.14",
     "gulp-nunjucks": "^2.2.0",
     "gulp-rename": "^1.2.2",
-    "trim": "0.0.1",
     "yargs": "^4.7.0"
   }
 }

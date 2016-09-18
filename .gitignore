@@ -1,7 +1,7 @@
 /www/*
 !/www/img/
 /node_modules/
-.env
 /build/*
 platforms/
 plugins/
+build-config.json

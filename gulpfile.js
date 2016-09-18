@@ -15,11 +15,16 @@ let gulp = require('gulp'),
 
 // Environment detecting
 let env = argv.env || 'prod',
-    envFile = '.env'
+    confFile = 'build-config.json',
+    config = {}
 ;
 
-if (!argv.env && fs.existsSync(envFile)) {
-    env = fs.readFileSync(envFile, 'utf8');
+if (fs.existsSync(confFile)) {
+    config = JSON.parse(fs.readFileSync(confFile, 'utf8'));
+}
+
+if (!argv.env) {
+    env = config.env;
 }
 
 gulp.task('less', function () {
