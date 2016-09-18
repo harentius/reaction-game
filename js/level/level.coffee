@@ -9,7 +9,6 @@
       @.nX = null
       @.nY = null
 
-
   global.Reaction ||= {}
   global.Reaction.Level = Level
 )(window)
