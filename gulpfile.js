@@ -15,13 +15,15 @@ let gulp = require('gulp'),
 
 // Environment detecting
 let env = argv.env || 'prod',
-    confFile = 'build-config.json',
-    config = {}
+    confFile = 'build-config.json'
 ;
 
-if (fs.existsSync(confFile)) {
-    config = JSON.parse(fs.readFileSync(confFile, 'utf8'));
+if (!fs.existsSync(confFile)) {
+    throw `Config file ${confFile} not found`;
 }
+
+let config = JSON.parse(fs.readFileSync(confFile, 'utf8'));
+let target = config.target;
 
 if (!argv.env) {
     env = config.env;
@@ -77,7 +79,7 @@ gulp.task('coffee-app', function () {
 });
 
 gulp.task('template', function () {
-    return gulp.src('./templates/index.html.nunj')
+    return gulp.src(`./templates/index_${target}.html.nunj`)
         .pipe(nunjucks.compile({
             assetVersion: Math.random().toString(36).substr(2, 15)
         }))
@@ -106,7 +108,7 @@ if (env === 'dev') {
     });
 
     gulp.task('template-spec', function () {
-        return gulp.src('./templates/tests.html.dist')
+        return gulp.src('./templates/tests.html.nunj')
             .pipe(nunjucks.compile({}))
             .pipe(rename('tests.html'))
             .pipe(gulp.dest('./www'))
