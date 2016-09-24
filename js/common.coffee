@@ -10,4 +10,8 @@
 
   global.Reaction.generateNumber = (min, max) ->
     Math.floor(Math.random() * (max - min)) + min
+
+  $(document).one('touchstart', () ->
+    global.isTouchScreen = true
+  )
 )(window)

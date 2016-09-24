@@ -24,8 +24,16 @@
       background: @cell-background;
       cursor: pointer;
 
+      &.filled-non-touch {
+        &:hover {
+          background: @cell-hover-background;
+        }
+      }
+    }
+
+    &.wrong-selection {
       &:hover {
-        background: @cell-hover-background;
+        background: @cell-background;
       }
     }
   }

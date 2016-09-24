@@ -48,6 +48,7 @@
           .text(value)
           .removeClass('filled')
           .addClass(if value && value != ' ' then 'filled' else '')
+          .addClass(if value and not global.isTouchScreen then 'filled-non-touch' else '')
         .end()
 
     _compileAttributes: (object, formatter = (n, v) -> "#{n}=\"#{v}\"") ->

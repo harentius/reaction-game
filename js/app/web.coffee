@@ -63,12 +63,11 @@
         if newVal > 0
           $score.animo({ animation: if newVal > oldVal then 'score-increased' else 'score-decreased' })
       ).on(game.CHOOSE_RIGHT, (data) ->
-        $(".row[data-row='#{data[0]}'] .cell[data-col='#{data[1]}']").animo({ animation: 'right-selection', duration: 0.3 }, () ->
+        $(".row[data-row='#{data[0]}'] .cell[data-col='#{data[1]}']").animo({ animation: 'right-selection', duration: 0.3}, () ->
           game.renderXY(data[0], data[1])
         )
       ).on(game.CHOOSE_WRONG, (data) ->
-        game.renderXY(data[0], data[1])
-        $(".row[data-row='#{data[0]}'] .cell[data-col='#{data[1]}']").animo({ animation: 'wrong-selection' })
+        $(".row[data-row='#{data[0]}'] .cell[data-col='#{data[1]}']").animo({ animation: 'wrong-selection', duration: 0.4})
       ).on(game.LEVEL_START, (data) ->
         $('#level').text(data[0] + 1)
       ).on(game.GAME_START, () ->
