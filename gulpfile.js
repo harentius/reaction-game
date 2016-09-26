@@ -23,7 +23,7 @@ if (!fs.existsSync(confFile)) {
 }
 
 let config = JSON.parse(fs.readFileSync(confFile, 'utf8'));
-let target = config.target;
+let platform = config.platform;
 
 if (!argv.env) {
     env = config.env;
@@ -61,7 +61,7 @@ gulp.task('coffee-lib', function () {
 });
 
 gulp.task('coffee-app', function () {
-    let resource = gulp.src('./js/app/web.coffee')
+    let resource = gulp.src(`./js/${platform}/app.coffee`)
             .pipe(coffee())
             .pipe(concat('app.js'))
         ;
@@ -79,7 +79,7 @@ gulp.task('coffee-app', function () {
 });
 
 gulp.task('template', function () {
-    return gulp.src(`./templates/index_${target}.html.nunj`)
+    return gulp.src(`./templates/index_${platform}.html.nunj`)
         .pipe(nunjucks.compile({
             assetVersion: Math.random().toString(36).substr(2, 15),
             env: env,

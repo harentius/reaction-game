@@ -1,4 +1,4 @@
 {
   "env": "prod",
-  "target": "web"
+  "platform": "web"
 }
