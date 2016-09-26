@@ -43,7 +43,7 @@ gulp.task('less', function () {
 });
 
 gulp.task('coffee-lib', function () {
-    let resource = gulp.src(['./js/**/*.coffee', '!./js/app/web.coffee'])
+    let resource = gulp.src(['./js/common/**/*.coffee', '!./js/app/web.coffee'])
         .pipe(coffee())
         .pipe(concat('lib.js'))
     ;
@@ -81,7 +81,8 @@ gulp.task('coffee-app', function () {
 gulp.task('template', function () {
     return gulp.src(`./templates/index_${target}.html.nunj`)
         .pipe(nunjucks.compile({
-            assetVersion: Math.random().toString(36).substr(2, 15)
+            assetVersion: Math.random().toString(36).substr(2, 15),
+            env: env,
         }))
         .pipe(rename('index.html'))
         .pipe(gulp.dest('./www'))
