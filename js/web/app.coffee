@@ -2,15 +2,7 @@
   'use strict'
 
   $(() ->
-    calculateGameGridSize = () ->
-      $container = $('.container')
-
-      return {
-        width: $container.width()
-        height: $container.height() - $('.nav-wrapper').height()
-      }
-
-    gameGridSize = calculateGameGridSize()
+    gameGridSize = Reaction.ui.calculateGameGridSize()
     dataRenderer = new Reaction.DataRenderer(
       $('#reaction-grid'),
       $('#transition-screen'),
@@ -88,13 +80,8 @@
         showSocialDialog('Congratulations! You win!',"I wined Reaction Game with score #{game.getScore()}!")
       )
 
-    $(global).on('resize', () ->
-      gameGridSize = calculateGameGridSize()
-      width = gameGridSize.width
-      height = gameGridSize.height
-      dataRenderer.setSize(width, height)
-      game.setSize(width, height)
-      game.render()
-    )
+
+    global.Reaction.app = game
+    global.Reaction.dataRenderer = dataRenderer
   )
 )(window, jQuery)
