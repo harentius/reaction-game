@@ -9,7 +9,6 @@
 
         <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
         <link href="bower_components/animo.js/animate-animo.min.css" media="all" rel="stylesheet" type="text/css" />
-        <link href="css/style.css?{{ assetVersion }}" media="all" rel="stylesheet" type="text/css" />
         {% block stylesheets_vendor %}{% endblock %}
 
         <link href="css/style.css?{{ assetVersion }}" media="all" rel="stylesheet" type="text/css" />
