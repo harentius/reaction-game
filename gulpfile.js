@@ -117,7 +117,9 @@ if (env === 'dev') {
     });
 
     gulp.task('watch', function() {
-        gulp.watch(['./js/**/*.coffee', './spec/**/*.coffee', './css/**/*.less'], ['default']);
+        gulp.watch(['./js/**/*.coffee', './spec/**/*.coffee'], ['coffee-lib', 'coffee-app']);
+        gulp.watch(['./css/**/*.less'], ['less']);
+        gulp.watch(['./templates/*'], ['template', 'template-spec']);
     });
 
     tasks.push('coffee-spec-common');

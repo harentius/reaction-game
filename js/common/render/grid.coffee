@@ -64,7 +64,7 @@
       cellSizeJ = gridWidth / nX
 
       # 2 - both side margins
-      return ~~(if (cellSizeI < cellSizeJ) then cellSizeI else cellSizeJ) - 2
+      return ~~(if (cellSizeI < cellSizeJ) then cellSizeI else cellSizeJ) - 3
 
   global.Reaction ||= {}
   global.Reaction.Grid = Grid
