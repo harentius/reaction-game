@@ -18,12 +18,16 @@
         {% block before_body %}{% endblock %}
         <!-- Game content -->
         <div class="container">
-            <div class="row nav-wrapper">
-                <div class="controls-wrapper text-right col-xs-6">
-                    <button id="new-game" class="btn col-sm-4 col-xs-12 control-button start">New game</button>
-                    <button id="stop-game" class="btn col-sm-4 col-xs-12 control-button stop">Stop game</button>
+            <nav class="navbar navbar-default main-menu">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed glyphicon glyphicon-menu-hamburger main-menu-toggler" data-toggle="collapse" data-target=".collapsing-menu" aria-expanded="false">
+                    </button>
                 </div>
-                <div class="info-wrapper text-center col-xs-6">
+                <div class="project-name text-center">
+                    Sequence Master
+                </div>
+                <div class="info-wrapper text-center pull-right">
                     <div class="time-wrapper">
                         <p class="explanation">Time: </p>
                         <p class="value"><b id="time-left"></b></p>
@@ -39,9 +43,20 @@
                         <p class="value"><b id="level"></b></p>
                     </div>
                 </div>
-            </div>
-            <div class="grid-wrapper">
-                <div id="reaction-grid" class="reaction-grid"></div>
+                <div class="collapse navbar-collapse collapsing-menu">
+                    <div class="row nav-wrapper">
+                        <div class="controls-wrapper">
+                            <button id="new-game" class="btn col-sm-4 col-xs-12 control-button start">New game</button>
+                            <button id="stop-game" class="btn col-sm-4 col-xs-12 control-button stop">Stop game</button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="content-wrapper">
+                <div class="grid-wrapper">
+                    <div id="reaction-grid" class="reaction-grid"></div>
+                </div>
             </div>
         </div>
 

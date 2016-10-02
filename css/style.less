@@ -9,22 +9,54 @@ html, body {
 
 body {
   margin: 0;
-  padding: 0 5px;
+  padding: 0;
   background: #84978c;
   overflow: hidden;
   background: url("../img/background.png");
 }
 
+.visibility-hidden {
+  visibility: hidden;
+}
+
 .main-menu {
-  .project-name {
+  background-color: @menu-background;
+  border-color: @menu-border;
+  color: @menu-text-color;
+  margin: 0;
+
+  .project-name, .info-wrapper {
     float: none;
-    text-align: center;
+  }
+
+  .navbar-header {
+
+  }
+
+  .project-name {
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    float: none;
+    color: @menu-text-color;
+
+    &.project-name:hover {
+      color: @menu-text-color;
+    }
   }
 
   .main-menu-toggler {
     position: absolute;
     left: 0;
     margin: 8px;
+
+    &:focus {
+      background: none;
+    }
+
+    &:hover {
+      background: @menu-toggler-background-hover;
+    }
   }
 }
 
@@ -39,15 +71,24 @@ body {
   overflow: hidden;
 }
 
-.grid-wrapper {
-  margin: 0 auto;
-  display: inline-block;
+.content-wrapper {
+  padding: 1px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  .grid-wrapper {
+    margin: 0 auto;
+    display: inline-block;
+  }
 }
 
 .control-button {
   margin: 5px 10px 5px 0;
   color: @control-button-text-color;
   font-size: 18px;
+  width: 100%;
 
   &:hover, &:visited, &:active, &:focus {
     color: @control-button-text-color;
@@ -80,6 +121,9 @@ body {
   height: @nav-panel-height;
   padding-left: 0;
   padding-right: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 
   .explanation {
     font-size: 14px;

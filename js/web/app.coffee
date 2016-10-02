@@ -14,9 +14,8 @@
 
     showSocialDialog = (title, shareText) ->
       $('#game-over-dialog').find('.title').text(title)
-      $(document)
-        .off('click')
-        .prop('title', shareText)
+      $('.content-wrapper').off('click')
+      $(document).prop('title', shareText)
 
       share = Ya.share2('share',
         theme:
@@ -64,6 +63,7 @@
         $('#level').text(data[0] + 1)
       ).on(game.GAME_START, () ->
         share.destroy() if share != null
+        $('.project-name').addClass('visibility-hidden') if $('.main-menu-toggler').is(':visible')
         $('.info-wrapper').show()
         $(document).on('click', '.cell.filled', (e) ->
           $cell = $(e.target).closest('.cell')

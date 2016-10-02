@@ -4,7 +4,7 @@
   global.Reaction ||= {}
   global.Reaction.ui ||= {}
   global.Reaction.ui.calculateGameGridSize = () ->
-    $container = $('.container')
+    $container = $('.content-wrapper')
 
     return {
       width: $container.width()
