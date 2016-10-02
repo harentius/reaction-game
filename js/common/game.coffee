@@ -53,6 +53,7 @@
       @.dataRenderer.render(@.level)
 
     choose: (x, y) ->
+      return if !@.active
       max = @.level.state.getMax()
 
       if (@.level.state.getXY(x, y) == max)

@@ -14,7 +14,6 @@
 
     showSocialDialog = (title, shareText) ->
       $('#game-over-dialog').find('.title').text(title)
-      $('.content-wrapper').off('click')
       $(document).prop('title', shareText)
 
       share = Ya.share2('share',
