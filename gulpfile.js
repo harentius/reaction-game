@@ -85,7 +85,7 @@ gulp.task('template', function () {
             env: env,
         }))
         .pipe(rename('index.html'))
-        .pipe(gulp.dest('./www'))
+        .pipe(gulp.dest('./www/'))
     ;
 });
 
