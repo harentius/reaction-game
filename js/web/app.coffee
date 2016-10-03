@@ -35,7 +35,9 @@
       $('#game-over-dialog').modal()
 
     $('#new-game').on('click', () ->
-      game.start()
+      setTimeout(() ->
+        game.start()
+      , 400)
     )
 
     $('#stop-game').on('click', () ->
