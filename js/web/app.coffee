@@ -35,9 +35,8 @@
       $('#game-over-dialog').modal()
 
     $('#new-game').on('click', () ->
-      setTimeout(() ->
-        game.start()
-      , 400)
+      $('.navbar-collapse').collapse('hide')
+      game.start()
     )
 
     $('#stop-game').on('click', () ->

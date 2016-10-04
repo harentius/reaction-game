@@ -19,7 +19,7 @@
         {% block before_body %}{% endblock %}
         <!-- Game content -->
         <div class="container">
-            <nav class="navbar navbar-default main-menu">
+            <nav class="navbar navbar-absolute navbar-default main-menu">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed glyphicon glyphicon-menu-hamburger main-menu-toggler" data-toggle="collapse" data-target=".collapsing-menu" aria-expanded="false">
@@ -47,7 +47,7 @@
                 <div class="collapse navbar-collapse collapsing-menu">
                     <div class="row nav-wrapper">
                         <div class="controls-wrapper">
-                            <button id="new-game" class="btn col-sm-4 col-xs-12 control-button start" data-toggle="collapse" data-target=".collapsing-menu">New game</button>
+                            <button id="new-game" class="btn col-sm-4 col-xs-12 control-button start">New game</button>
                             <button id="stop-game" class="btn col-sm-4 col-xs-12 control-button stop">Stop game</button>
                         </div>
                     </div>
