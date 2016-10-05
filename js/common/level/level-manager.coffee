@@ -3,13 +3,13 @@
 
   class LevelManager
     constructor: () ->
-      @.config = Reaction.config
-      @.stateManager = new Reaction.StateManager()
+      @.config = app.config
+      @.stateManager = new app.StateManager()
 
     create: (levelNumber, width, height) ->
       levelConfig = @.config.levels[levelNumber]
       throw "Config for level #{levelNumber} not found" if !levelConfig
-      level = new Reaction.Level()
+      level = new app.Level()
       numbers = @.config.levels[levelNumber].numbers
       nX = @._calculateNX(width, height, numbers)
       nY = @._calculateNY(width, height, numbers)
@@ -36,6 +36,6 @@
 
       numberForDisplaying
 
-  global.Reaction ||= {}
-  global.Reaction.LevelManager = LevelManager
+  global.app ||= {}
+  global.app.LevelManager = LevelManager
 )(window)

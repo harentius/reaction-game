@@ -3,20 +3,20 @@
 
   $(() ->
     $(global).on('resize', () ->
-      gameGridSize = Reaction.ui.calculateGameGridSize()
+      gameGridSize = app.ui.calculateGameGridSize()
       width = gameGridSize.width
       height = gameGridSize.height
 
-      if not Reaction.dataRenderer
+      if not app.dataRenderer
         return
 
-      Reaction.dataRenderer.setSize(width, height)
+      app.dataRenderer.setSize(width, height)
 
-      if not Reaction.app || not Reaction.app.level
+      if not app.game || not app.game.level
         return
 
-      Reaction.app.setSize(width, height)
-      Reaction.app.render()
+      app.game.setSize(width, height)
+      app.game.render()
     )
   )
 )(window, jQuery)

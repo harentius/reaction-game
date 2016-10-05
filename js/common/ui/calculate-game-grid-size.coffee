@@ -1,9 +1,9 @@
 ((global, $) ->
   'use strict'
 
-  global.Reaction ||= {}
-  global.Reaction.ui ||= {}
-  global.Reaction.ui.calculateGameGridSize = () ->
+  global.app ||= {}
+  global.app.ui ||= {}
+  global.app.ui.calculateGameGridSize = () ->
     $container = $('.content-wrapper')
 
     return {

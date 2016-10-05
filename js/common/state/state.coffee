@@ -83,6 +83,6 @@
         return i if isAvailableNumber(i)
         i++
 
-  global.Reaction ||= {}
-  global.Reaction.State = State
+  global.app ||= {}
+  global.app.State = State
 )(window)

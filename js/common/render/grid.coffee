@@ -66,6 +66,6 @@
       # 2 - both side margins
       return ~~(if (cellSizeI < cellSizeJ) then cellSizeI else cellSizeJ) - 3
 
-  global.Reaction ||= {}
-  global.Reaction.Grid = Grid
+  global.app ||= {}
+  global.app.Grid = Grid
 )(window, jQuery)

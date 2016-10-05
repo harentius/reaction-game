@@ -57,8 +57,8 @@
     _createGridIfNotExists: (level) ->
       return if @.grid
 
-      @.grid = new Reaction.Grid(@.width, @.height, level.nX, level.nY, level.state.getData(), @.$container)
+      @.grid = new app.Grid(@.width, @.height, level.nX, level.nY, level.state.getData(), @.$container)
 
-  global.Reaction ||= {}
-  global.Reaction.DataRenderer = DataRenderer
+  global.app ||= {}
+  global.app.DataRenderer = DataRenderer
 )(window)

@@ -20,8 +20,8 @@
       @.dataRenderer = dataRenderer
       @.width = dataRenderer.getWidth()
       @.height = dataRenderer.getHeight()
-      @.config = Reaction.config
-      @.levelManager = new Reaction.LevelManager()
+      @.config = app.config
+      @.levelManager = new app.LevelManager()
       @.timeLeft = null
       @.score = null
       @.timeLeftInterval = null
@@ -108,7 +108,7 @@
             .done(() =>
               return if !@.active
 
-              @.timeLeftInterval = Reaction.immediateInterval(() =>
+              @.timeLeftInterval = app.immediateInterval(() =>
                 @.timeLeft = Math.max(@.timeLeft - @.config.selectionDeadlineUpdateInterval, 0)
                 @.trigger(@.LEFT_TIME_CHANGED)
 
@@ -136,6 +136,6 @@
       clearInterval(@.timeLeftInterval)
 
 
-  global.Reaction ||= {}
-  global.Reaction.Game = Game
+  global.app ||= {}
+  global.app.Game = Game
 )(window)

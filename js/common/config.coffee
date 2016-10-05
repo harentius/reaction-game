@@ -1,8 +1,8 @@
 ((global) ->
   'use strict'
 
-  global.Reaction ||= {}
-  global.Reaction.config =
+  global.app ||= {}
+  global.app.config =
     availabilityAreaDistance: 1
     minAvailableNumbers: 5
     minAvailablePlaces: 5

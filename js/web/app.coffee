@@ -2,14 +2,14 @@
   'use strict'
 
   $(() ->
-    gameGridSize = Reaction.ui.calculateGameGridSize()
-    dataRenderer = new Reaction.DataRenderer(
+    gameGridSize = app.ui.calculateGameGridSize()
+    dataRenderer = new app.DataRenderer(
       $('#reaction-grid'),
       $('#transition-screen'),
       gameGridSize.width,
       gameGridSize.height
     )
-    game = new Reaction.Game(dataRenderer)
+    game = new app.Game(dataRenderer)
     share = null
 
     showSocialDialog = (title, shareText) ->
@@ -76,13 +76,13 @@
         $('#stop-game').show()
         $('#new-game').hide()
       ).on(game.GAME_OVER, () ->
-        showSocialDialog('Game Over', "I reached score #{game.getScore()} in Reaction Game!")
+        showSocialDialog('Game Over', "I reached score #{game.getScore()} in Sequence Master Game!")
       ).on(game.GAME_WIN, () ->
-        showSocialDialog('Congratulations! You win!',"I wined Reaction Game with score #{game.getScore()}!")
+        showSocialDialog('Congratulations! You won!',"I won Sequence Master Game with score #{game.getScore()}!")
       )
 
 
-    global.Reaction.app = game
-    global.Reaction.dataRenderer = dataRenderer
+    global.app.game = game
+    global.app.dataRenderer = dataRenderer
   )
 )(window, jQuery)
