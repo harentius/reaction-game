@@ -43,7 +43,7 @@ gulp.task('less', function () {
 });
 
 gulp.task('coffee-lib', function () {
-    let resource = gulp.src(['./js/common/**/*.coffee', '!./js/app/web.coffee'])
+    let resource = gulp.src(['./js/*.coffee', './js/common/**/*.coffee'])
         .pipe(coffee())
         .pipe(concat('lib.js'))
     ;
