@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="harentius.reaction_game" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Reaction Game</name>
+<widget id="harentius.sequence_master_game" version="2.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Sequence Master</name>
     <description>
-        Reaction Game
+        Choose biggest available number to win
     </description>
     <author email="yaroslav.osypenko@gmail.com" href="http://folkprog.net">
         Harentius
@@ -15,4 +15,7 @@
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
+    <feature name="SocialSharing">
+        <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
+    </feature>
 </widget>

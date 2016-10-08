@@ -23,8 +23,7 @@
       )
 
       $('#result-score').text(game.getScore())
-      $('#stop-game').hide()
-      $('#new-game').show()
+      app.refreshMenu()
       $('#game-over-dialog').modal()
 
     game
