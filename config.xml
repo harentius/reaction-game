@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="harentius.sequence_master_game" version="2.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="harentius.sequence_master" version="2.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Sequence Master</name>
     <description>
         Choose biggest available number to win
@@ -12,9 +12,22 @@
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+
     <platform name="android">
         <allow-intent href="market:*" />
+        <icon src="resources/android/icon.png" />
+
+        <splash src="resources/android/splash-screen.png" density="land-hdpi"/>
+        <splash src="resources/android/splash-screen.png" density="land-ldpi"/>
+        <splash src="resources/android/splash-screen.png" density="land-mdpi"/>
+        <splash src="resources/android/splash-screen.png" density="land-xhdpi"/>
+
+        <splash src="resources/android/splash-screen.png" density="port-hdpi"/>
+        <splash src="resources/android/splash-screen.png" density="port-ldpi"/>
+        <splash src="resources/android/splash-screen.png" density="port-mdpi"/>
+        <splash src="resources/android/splash-screen.png" density="port-xhdpi"/>
     </platform>
+
     <feature name="SocialSharing">
         <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
     </feature>
