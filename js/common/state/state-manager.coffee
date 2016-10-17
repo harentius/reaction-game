@@ -3,7 +3,7 @@
 
   class StateManager
     constructor: () ->
-      @.config = app.config
+      @.config = app.config.game
 
     create: (config, nX, nY) ->
       state = new app.State( @.config.minAvailableNumbers)

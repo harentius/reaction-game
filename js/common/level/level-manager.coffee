@@ -3,7 +3,7 @@
 
   class LevelManager
     constructor: () ->
-      @.config = app.config
+      @.config = app.config.game
       @.stateManager = new app.StateManager()
 
     create: (levelNumber, width, height) ->

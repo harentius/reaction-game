@@ -2,7 +2,8 @@
   'use strict'
 
   global.app ||= {}
-  global.app.config =
+  global.app.config ||= {}
+  global.app.config.game =
     availabilityAreaDistance: 1
     minAvailableNumbers: 5
     minAvailablePlaces: 5

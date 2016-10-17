@@ -20,7 +20,7 @@
       @.dataRenderer = dataRenderer
       @.width = dataRenderer.getWidth()
       @.height = dataRenderer.getHeight()
-      @.config = app.config
+      @.config = app.config.game
       @.levelManager = new app.LevelManager()
       @.timeLeft = null
       @.score = null
