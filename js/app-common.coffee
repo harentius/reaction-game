@@ -2,6 +2,7 @@
   'use strict'
 
   global.app ||= {}
+  isFirebaseInitialized = false
 
   global.app.createGame = () ->
     gameGridSize = app.ui.calculateGameGridSize()
@@ -26,6 +27,25 @@
       game.stop()
     )
 
+    $('.form-leaderboard-name').on('submit', (e) ->
+      e.preventDefault()
+      if !isFirebaseInitialized
+        firebase.initializeApp(app.config.firebase)
+        isFirebaseInitialized = true
+
+      score = game.getScore()
+      userName = $('.form-leaderboard-name').find('#name').val()
+      scoresDB = firebase.database().ref('scores')
+      scoresDB.push({
+        score: score
+        userName: userName
+      })
+
+      resultsToShow = 20
+      firebase
+        .orderByChild("score")
+        .startAt("Amanda")
+    )
     game
       .on(game.LEFT_TIME_CHANGED, () ->
         $('#time-left').text(@.getTimeLeftInSeconds())

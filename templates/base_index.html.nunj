@@ -28,6 +28,9 @@
                 </div>
                 <div class="project-name text-center">
                     Sequence Master
+                    <a class="button-game-rules" id="button-game-rules" data-toggle="modal" data-target="#help-dialog">
+                        <i class="glyphicon glyphicon-question-sign"></i>
+                    </a>
                 </div>
                 <div class="info-wrapper text-center pull-right">
                     <div class="time-wrapper">
@@ -71,6 +74,21 @@
                         <h4>Reached score: <b id="result-score"></b></h4>
                         <h4>If you liked game, please tell friends:</h4>
                         <div id="share"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help dialog -->
+        <div id="help-dialog" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        How to play
+                    </div>
+                    <div class="modal-body">
+                        <p>To play game, click on the biggest available number</p>
+                        <p>For every right selection, your score will be increased, and decreased if you're mistaken</p>
                     </div>
                 </div>
             </div>
