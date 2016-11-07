@@ -2,7 +2,6 @@
   'use strict'
 
   global.app ||= {}
-  isFirebaseInitialized = false
 
   global.app.createGame = () ->
     gameGridSize = app.ui.calculateGameGridSize()
@@ -29,23 +28,27 @@
 
     $('.form-leaderboard-name').on('submit', (e) ->
       e.preventDefault()
-      if !isFirebaseInitialized
-        firebase.initializeApp(app.config.firebase)
-        isFirebaseInitialized = true
-
-      score = game.getScore()
       userName = $('.form-leaderboard-name').find('#name').val()
-      scoresDB = firebase.database().ref('scores')
-      scoresDB.push({
-        score: score
-        userName: userName
-      })
+      score = game.getScore()
+      app.ResultStorage.save(userName, score)
+      app.ResultStorage.getRelevantResults(score)
+        .done((rating) ->
+          ratingContent = '<table class="table table-striped result-table"><tr><th>Position</th><th>User</th><th>Score</th></tr>'
 
-      resultsToShow = 20
-      firebase
-        .orderByChild("score")
-        .startAt("Amanda")
+          for result in rating
+            attrs = if (result.userName == userName && result.score == score) then 'class="success"' else ''
+            ratingContent +=
+            "<tr #{attrs}>
+              <td>#{result.position}</td>
+              <td>#{result.userName}</td>
+              <td>#{result.score}</td>
+            </tr>"
+
+          ratingContent += '</table>'
+          $('#game-over-dialog').find('.modal-body').html(ratingContent)
+        )
     )
+
     game
       .on(game.LEFT_TIME_CHANGED, () ->
         $('#time-left').text(@.getTimeLeftInSeconds())

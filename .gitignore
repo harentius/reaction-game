@@ -5,3 +5,4 @@
 platforms/
 plugins/
 build-config.json
+app_config.coffee

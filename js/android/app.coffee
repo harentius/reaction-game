@@ -16,8 +16,10 @@
 
     game
       .on(game.GAME_OVER, () ->
+        $('#game-over-dialog').modal()
         proposeSharing('Game Over', "I reached score #{game.getScore()} in Sequence Master Game!")
       ).on(game.GAME_WIN, () ->
+        $('#game-over-dialog').modal()
         proposeSharing('Congratulations! You won!',"I won Sequence Master Game with score #{game.getScore()}!")
       )
 
