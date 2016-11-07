@@ -70,21 +70,21 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <h3 class="text-center title"></h3>
-                        <h4>Reached score: <b id="result-score"></b></h4>
-                        <div>
-                            <form class="form-inline form-leaderboard-name">
-                                <div class="form-group">
-                                <label>
-                                    Please enter your name/nickname to add result to the leaderboard
-                                    <input type="text" required="required" class="form-control" id="name"/>
-                                    <button class="btn btn-primary">Ok</button>
-                                </label>
-                                </div>
-                            </form>
+                        <div class="game-over-content">
+                            <h3 class="text-center title"></h3>
+                            <h4>Reached score: <b id="result-score"></b></h4>
+                            <div>
+                                <form class="form-inline form-leaderboard-name">
+                                    <div class="form-group">
+                                        <label for="name">Please enter your name/nickname to add result to the leaderboard</label>
+                                        <input type="text" required="required" class="form-control form-element" id="name"/>
+                                        <button class="btn btn-primary form-control form-element">Ok</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <h4>If you liked game, please tell your friends:</h4>
+                            <div id="share"></div>
                         </div>
-                        <h4>If you liked game, please tell your friends:</h4>
-                        <div id="share"></div>
                     </div>
                 </div>
             </div>
