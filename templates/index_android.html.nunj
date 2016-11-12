@@ -10,3 +10,7 @@
 {% block javascripts_vendor %}
     <script type="text/javascript" src="cordova.js"></script>
 {% endblock %}
+
+{% block after_highscores_content %}
+    <button class="btn btn-primary form-control form-element share-button">Share</button>
+{% endblock %}

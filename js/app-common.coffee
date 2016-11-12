@@ -26,12 +26,23 @@
       game.stop()
     )
 
+    showHighScoresUsernameTab = (title, shareText) ->
+      $('#game-over-dialog').find('.title').text(title)
+      $(document).off('click', '.cell.filled')
+      $(document).prop('title', shareText)
+      $('#result-score').text(game.getScore())
+      app.refreshMenu()
+      $('.game-over-content').show()
+      $('.highscores-content').hide()
+      $('#game-over-dialog').modal()
+
     showHighScoresTab = (rating, userName, score) ->
       $resultTable = $('.result-table')
       $resultTableBody = $resultTable.find('tbody')
       $resultTableBody.html('')
       rowTemplate = $resultTable.data('content-row-prototype')
       prevPosition = null
+      position = null
 
       for result in rating
         $row = $(rowTemplate)
@@ -45,10 +56,13 @@
           $resultTableBody.append($resultTable.data('missed-rows-prototype'))
 
         if result.userName == userName && result.score == score
+          position = result.position
           $row.addClass('success')
 
         prevPosition = result.position
         $resultTableBody.append($row)
+        shareText = "I reached score #{score} and took #{position} place in Sequence Master Game!"
+        app.onHighScoresShow(shareText)
         $('.game-over-content').hide()
         $('.highscores-content').show()
 
@@ -94,5 +108,9 @@
         )
         $('#stop-game').show()
         $('#new-game').hide()
+      ).on(game.GAME_OVER, () ->
+        showHighScoresUsernameTab('Game Over', "I reached score #{game.getScore()} in Sequence Master Game!")
+      ).on(game.GAME_WIN, () ->
+        showHighScoresUsernameTab('Congratulations! You won!',"I won Sequence Master Game with score #{game.getScore()}!")
       )
 )(window, jQuery)

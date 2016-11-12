@@ -17,3 +17,7 @@
 {% block javascripts_vendor %}
     <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
 {% endblock %}
+
+{% block after_highscores_content %}
+    <div id="share"></div>
+{% endblock %}

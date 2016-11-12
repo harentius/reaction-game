@@ -1,27 +1,21 @@
 ((global, $) ->
   'use strict'
 
-  $(() ->
-    game = app.createGame()
+  global.app.onHighScoresShow = (shareText) ->
     onSharingStop = () ->
       $('.navbar-collapse').collapse('hide')
       app.refreshMenu()
 
-    proposeSharing = (title, shareText) ->
+    $('.share-button').on('click', () ->
       plugins.socialsharing.shareWithOptions({
         message: shareText,
         url: 'https://rg.folkprog.net',
-        chooserTitle: title
+        chooserTitle: 'Share result'
       }, onSharingStop, onSharingStop)
+    )
 
-    game
-      .on(game.GAME_OVER, () ->
-        $('#game-over-dialog').modal()
-        proposeSharing('Game Over', "I reached score #{game.getScore()} in Sequence Master Game!")
-      ).on(game.GAME_WIN, () ->
-        $('#game-over-dialog').modal()
-        proposeSharing('Congratulations! You won!',"I won Sequence Master Game with score #{game.getScore()}!")
-      )
+  $(() ->
+    game = app.createGame()
 
 
     global.app.game = game
