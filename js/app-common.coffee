@@ -26,6 +26,32 @@
       game.stop()
     )
 
+    showHighScoresTab = (rating, userName, score) ->
+      $resultTable = $('.result-table')
+      $resultTableBody = $resultTable.find('tbody')
+      $resultTableBody.html('')
+      rowTemplate = $resultTable.data('content-row-prototype')
+      prevPosition = null
+
+      for result in rating
+        $row = $(rowTemplate)
+
+        $row
+          .find('.position').text(result.position).end()
+          .find('.username').text(result.userName).end()
+          .find('.score').text(result.score).end()
+
+        if prevPosition and (result.position - prevPosition) != 1
+          $resultTableBody.append($resultTable.data('missed-rows-prototype'))
+
+        if result.userName == userName && result.score == score
+          $row.addClass('success')
+
+        prevPosition = result.position
+        $resultTableBody.append($row)
+        $('.game-over-content').hide()
+        $('.highscores-content').show()
+
     $('.form-leaderboard-name').on('submit', (e) ->
       e.preventDefault()
       userName = $('.form-leaderboard-name').find('#name').val()
@@ -33,19 +59,7 @@
       app.ResultStorage.save(userName, score)
       app.ResultStorage.getRelevantResults(score)
         .done((rating) ->
-          ratingContent = '<table class="table table-striped result-table"><tr><th>Position</th><th>User</th><th>Score</th></tr>'
-
-          for result in rating
-            attrs = if (result.userName == userName && result.score == score) then 'class="success"' else ''
-            ratingContent +=
-            "<tr #{attrs}>
-              <td>#{result.position}</td>
-              <td>#{result.userName}</td>
-              <td>#{result.score}</td>
-            </tr>"
-
-          ratingContent += '</table>'
-          $('#game-over-dialog').find('.modal-body').html(ratingContent)
+          showHighScoresTab(rating, userName, score)
         )
     )
 

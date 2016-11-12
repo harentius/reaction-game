@@ -6,7 +6,8 @@
     share = null
 
     showSocialDialog = (title, shareText) ->
-      $('#game-over-dialog').find('.title').text(title)
+      $('.game-over-content').show()
+      $('.highscores-content').hide()
       $(document).off('click', '.cell.filled')
       $(document).prop('title', shareText)
 

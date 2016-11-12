@@ -65,11 +65,12 @@
             </div>
         </div>
 
-        <!-- Game over dialog -->
+        {# Game over dialog  #}
         <div id="game-over-dialog" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
+                        {# Sharing content #}
                         <div class="game-over-content">
                             <h3 class="text-center title"></h3>
                             <h4>Reached score: <b id="result-score"></b></h4>
@@ -84,6 +85,28 @@
                             </div>
                             <h4>If you liked game, please tell your friends:</h4>
                             <div id="share"></div>
+                        </div>
+
+                        {# Hightscores list content #}
+                        <div class="highscores-content display-none">
+                            <h3 class="text-center title">Highest scores</h3>
+                            <table class="table table-striped result-table" data-content-row-prototype="
+                                <tr>
+                                    <td class='position'></td>
+                                    <td class='username'></td>
+                                    <td class='score'></td>
+                                </tr>
+                            " data-missed-rows-prototype="
+                                <tr>
+                                    <td class='missed-rows text-center' colspan='3'><span>.</span><span>.</span><span>.</span></td>
+                                </tr>
+                            " >
+                                <tr>
+                                    <th>Position</th>
+                                    <th>User</th>
+                                    <th>Score</th>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
