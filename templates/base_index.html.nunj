@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Play Reaction Game</title>
+        <title>Play the Sequence Master Game</title>
 
         <meta charset="UTF-8">
-        <meta name="description" content="Select the biggest number: challenge your friends and beat the record!" />
+        <meta name="description" content="Sequence Master is a simple game, which checks and trains your attention, memory and number comparing skills. The goal of the game is to click all numbered cells of the grid in the proper sequence, starting with the biggest one." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 
         <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
