@@ -1,7 +1,6 @@
 'use strict';
 
 let gulp = require('gulp'),
-    hub = require('gulp-hub'),
     fs = require('fs'),
     argv = require('yargs').argv,
     less = require('gulp-less'),
