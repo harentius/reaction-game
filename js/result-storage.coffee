@@ -10,21 +10,26 @@
 
     save: (userName, score) ->
       @._initialize()
-      scoresDB = global.firebase.database().ref('scores')
-      scoresDB.push({
-        score: score
-        userName: userName
-      })
+      ref = global.firebase.database()
+        .ref("scores-v2/#{userName}")
 
-    getRelevantResults: (score, limit = 12) ->
+      ref
+        .once('value', (snap) =>
+          if snap.exists() and snap.val() > score
+            return
+
+          ref.set(score)
+        )
+
+    getRelevantResults: (score, userName, limit = 12) ->
       @._initialize()
       highestLimit = 5
       partSize = ~~((limit - highestLimit) / 2)
-      scoresDB = global.firebase.database().ref('scores')
+      scoresDB = global.firebase.database().ref('scores-v2')
 
       highestScoresDfd = $.Deferred()
       scoresDB
-        .orderByChild('score')
+        .orderByValue()
         .limitToLast(highestLimit)
         .once('value', (snap) =>
           highestScoresDfd.resolve(@._retrieveData(snap).reverse())
@@ -33,7 +38,7 @@
       higherScoresDfd = $.Deferred()
       scoresDB
         .startAt(score)
-        .orderByChild('score')
+        .orderByValue()
         .limitToFirst(partSize)
         .once('value', (snap) =>
           higherScoresDfd.resolve(@._retrieveData(snap).reverse())
@@ -42,19 +47,18 @@
       lowerScoresDfd = $.Deferred()
       scoresDB
         .endAt(score)
-        .orderByChild('score')
+        .orderByValue()
         .limitToLast(limit - highestLimit - partSize)
         .once('value', (snap) =>
           lowerScoresDfd.resolve(@._retrieveData(snap).reverse())
         )
 
-      # Workaround getting number of higher results (Performance sucks. Should reimplement this if at least 100-1000 people will play this shit)
       higherScoresCountDfd = $.Deferred()
       scoresDB
         .startAt(score)
-        .orderByChild('score')
+        .orderByValue()
         .once('value', (snap) ->
-          higherScoresCountDfd.resolve(Object.keys(snap.val()).length)
+          higherScoresCountDfd.resolve(snap.numChildren())
         )
 
       dfd = $.Deferred()
@@ -63,20 +67,43 @@
           rating = []
           ratingMap = {}
           position = 1
+          shouldInsertNotSavedResult = false
+          prevScore = null
 
           for chunk, i in [highestScores, higherScores, lowerScores]
-            for score, j in chunk
-              mapKey = score.userName + score.score
-              score.position = position
+            for result, j in chunk
+              if ratingMap[result.userName]
+                continue
+
+              if result.userName == userName and score < result.score
+                shouldInsertNotSavedResult = true
+
+              if shouldInsertNotSavedResult and prevScore > score and score >= result.score
+                rating.push({
+                  position: position
+                  userName: userName
+                  score: score
+                })
+                position++
+                shouldInsertNotSavedResult = false
+
+              result.position = position
 
               if i == 0 && j == chunk.length - 1
                 position += higherScoresCount
 
-              if !ratingMap[mapKey]
-                rating.push(score)
-                position++
+              rating.push(result)
+              position++
 
-              ratingMap[mapKey] = true
+              ratingMap[result.userName] = true
+              prevScore = result.score
+
+          if shouldInsertNotSavedResult
+            rating.push({
+              position: position
+              userName: userName
+              score: score
+            })
 
           dfd.resolve(rating)
         )
@@ -91,7 +118,12 @@
     _retrieveData: (snap) ->
       data = []
       snap.forEach((childSnapshot) ->
-        data.push(childSnapshot.val())
+        key = childSnapshot.key
+        val = childSnapshot.val()
+        data.push({
+          userName: key
+          score: val
+        })
 
         false
       )

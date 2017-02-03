@@ -71,7 +71,7 @@
       userName = $('.form-leaderboard-name').find('#name').val()
       score = game.getScore()
       app.ResultStorage.save(userName, score)
-      app.ResultStorage.getRelevantResults(score)
+      app.ResultStorage.getRelevantResults(score, userName)
         .done((rating) ->
           showHighScoresTab(rating, userName, score)
         )
